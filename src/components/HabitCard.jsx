@@ -8,16 +8,28 @@ const HabitCard = ({ habit, variants }) => {
   return (
     <motion.div
       variants={variants}
-      className="card bg-base-100 shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300"
+      className="card bg-base-100 shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 group"
       style={{ borderRadius: '20px' }}
     >
       {/* Habit Image/Banner */}
       <figure className="h-44 bg-gradient-to-br from-blue-500 to-blue-600 relative overflow-hidden">
-        <img
-          src={habit.imageUrl || '/default-habit-img/51359.jpg'}
-          alt={habit.title}
-          className="w-full h-full object-cover"
-        />
+        {habit.imageUrl ? (
+          <img
+            src={habit.imageUrl}
+            alt={habit.title}
+            className="w-full h-full object-cover transition-all duration-300 group-hover:brightness-50"
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+            <MdOutlineTaskAlt className="text-white text-6xl opacity-30" />
+          </div>
+        )}
+        {/* Description Overlay on Hover */}
+        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center p-4">
+          <p className="text-white text-sm text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-medium">
+            {habit.description}
+          </p>
+        </div>
       </figure>
 
       {/* Card Body */}
@@ -37,11 +49,6 @@ const HabitCard = ({ habit, variants }) => {
             </div>
           </div>
         </div>
-
-        {/* Description */}
-        <p className="text-sm text-gray-600 line-clamp-2 mb-4">
-          {habit.description}
-        </p>
 
         {/* See Details Button */}
         <Link
