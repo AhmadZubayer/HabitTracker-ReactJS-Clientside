@@ -5,7 +5,7 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import { FaTrophy, FaCalendarCheck, FaClock, FaUser } from 'react-icons/fa';
-import { completeHabit } from '../utils/habitUtils';
+import CompletedHabit from '../components/CompletedHabit';
 
 const HabitDetails = () => {
   const { id } = useParams();
@@ -52,7 +52,7 @@ const HabitDetails = () => {
   const handleMarkComplete = () => {
     if (!habit) return;
     
-    completeHabit(id, habit, () => {
+    CompletedHabit.markComplete(id, habit, () => {
       loadHabit(); // Reload habit after successful completion
     });
   };

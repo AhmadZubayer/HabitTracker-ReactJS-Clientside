@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { FaEdit, FaTrash, FaCheckCircle, FaPlus, FaTrophy } from 'react-icons/fa';
 import { MdOutlineTaskAlt } from 'react-icons/md';
 import axios from 'axios';
-import { completeHabit, isCompletedToday } from '../utils/habitUtils';
+import CompletedHabit, { isCompletedToday } from '../components/CompletedHabit';
 
 const MyHabits = () => {
   const { user } = use(AuthContext);
@@ -59,7 +59,7 @@ const MyHabits = () => {
     const habit = habits.find(h => h._id === id);
     if (!habit) return;
     
-    completeHabit(id, habit, () => {
+    CompletedHabit.markComplete(id, habit, () => {
       loadHabits(); // Reload habits after successful completion
     });
   };
