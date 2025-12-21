@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "name": "Shihab Uddin",
+    "specialization": "Specializes in low-light plant maintenance and air-purifying varieties",
+    "image": "/gardeners/1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Emma Collins",
+    "specialization": "Expert in styling living spaces with sustainable plant decor",
+    "image": "/gardeners/2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Rohit Roy",
+    "specialization": "Focuses on drought-tolerant plants and minimalist arrangements",
+    "image": "/gardeners/3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Grace Miller",
+    "specialization": "Guides users on organic fertilizers and seasonal feeding schedules",
+    "image": "/gardeners/4.jpg" 
+  }
+]
+

@@ -1,0 +1,44 @@
+[
+    {
+        "image": "/banner-images/1.jpg",
+        "title": "Welcome to GreenNest",
+        "slogan": "Nurture Your Space with Nature's Beauty",
+        "description": "Transform your home into a green paradise"
+    },
+    {
+        "image": "/banner-images/2.jpg",
+        "title": "Expert Plant Care",
+        "slogan": "Growing Together, Naturally",
+        "description": "Professional guidance for healthy plants"
+    },
+    {
+        "image": "/banner-images/3.jpg",
+        "title": "Indoor Plant Collection",
+        "slogan": "Breathe Life Into Every Corner",
+        "description": "Discover our curated selection of plants"
+    },
+    {
+        "image": "/banner-images/4.jpg",
+        "title": "Air Purifying Plants",
+        "slogan": "Clean Air, Healthy Living",
+        "description": "Natural solutions for better air quality"
+    },
+    {
+        "image": "/banner-images/5.jpg",
+        "title": "Low Maintenance Beauties",
+        "slogan": "Easy Care, Maximum Impact",
+        "description": "Perfect plants for busy lifestyles"
+    },
+    {
+        "image": "/banner-images/6.jpg",
+        "title": "Plant Consultation",
+        "slogan": "Expert Advice at Your Fingertips",
+        "description": "Book a session with our green experts"
+    },
+    {
+        "image": "/banner-images/7.jpg",
+        "title": "Sustainable Living",
+        "slogan": "Grow Green, Live Green",
+        "description": "Join the indoor gardening revolution"
+    }
+]

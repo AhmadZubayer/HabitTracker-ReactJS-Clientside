@@ -1,0 +1,31 @@
+[
+  {
+    "id": 1,
+    "title": "Don't Overwater",
+    "icon": "💧",
+    "subtitle": "Plants grown in dim light usually have slower growth rates and lower water requirements than those exposed to bright sunshine. Allow the soil to dry out a bit between waterings to avoid root rot.",
+    "image": "/plant-care/wateringplants.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Provide Even Light Exposure",
+    "icon": "🔄",
+    "subtitle": "If your plants seem to be stretching toward the light source, rotate them regularly to give them even light exposure or move them to a different location with brighter light conditions. Many plants that tolerate low light may actually grow better in slightly brighter or medium light.",
+    "image": "/plant-care/dontoverexpousure.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Keep Away from Direct Sunlight",
+    "icon": "☀️",
+    "subtitle": "Many low-light plants hail from tropical regions, where blazing sunlight is filtered out by a dense tangle of leafy trees and vines. In sunnier rooms, move your plants back from the light or draw the curtains during the hottest part of the day to avoid scorching or discoloring the leaves.",
+    "image": "/plant-care/nondirect sunlight.jpg"
+  },
+  {
+    "id": 4,
+    "title": "Cut Back on Fertilizers",
+    "icon": "🌿",
+    "subtitle": "Most low-light plants are light feeders. Apply a diluted liquid houseplant fertilizer from spring through fall while plants are actively growing. Don't fertilize at all during the winter.",
+    "image": "/plant-care/lowfertilizers.jpg"
+  }
+]
+
