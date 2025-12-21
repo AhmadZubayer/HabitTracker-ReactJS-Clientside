@@ -42,7 +42,7 @@ const CompletedHabit = {
    * Mark habit as complete for today
    * @param {string} habitId - The habit ID
    * @param {object} habit - The complete habit object
-   * @param {function} onSuccess - Callback function on success
+   * @param {function} onSuccess - Callback function on success (receives updated data)
    * @param {function} onError - Optional callback function on error
    */
   markComplete: async (habitId, habit, onSuccess, onError) => {
@@ -67,6 +67,7 @@ const CompletedHabit = {
       if (response.data) {
         toast.success('Habit marked as complete! 🎉');
         if (onSuccess) {
+          // Pass the response data including streak info
           onSuccess(response.data);
         }
       }

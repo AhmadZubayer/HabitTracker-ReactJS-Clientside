@@ -6,6 +6,7 @@ import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import { FaTrophy, FaCalendarCheck, FaClock, FaUser } from 'react-icons/fa';
 import CompletedHabit from '../components/CompletedHabit';
+import CompletionModal from '../components/CompletionModal';
 
 const HabitDetails = () => {
   const { id } = useParams();
@@ -14,6 +15,8 @@ const HabitDetails = () => {
   
   const [habit, setHabit] = useState(null);
   const [progressData, setProgressData] = useState([]);
+  const [showCompletionModal, setShowCompletionModal] = useState(false);
+  const [completionData, setCompletionData] = useState({ streak: 0, habitTitle: '' });
   
   const loadHabit = async () => {
     try {
@@ -52,8 +55,16 @@ const HabitDetails = () => {
   const handleMarkComplete = () => {
     if (!habit) return;
     
-    CompletedHabit.markComplete(id, habit, () => {
-      loadHabit(); // Reload habit after successful completion
+    CompletedHabit.markComplete(id, habit, (data) => {
+      // Show completion modal with streak data
+      setCompletionData({
+        streak: data.currentStreak || 1,
+        habitTitle: habit.title
+      });
+      setShowCompletionModal(true);
+      
+      // Reload habit after successful completion
+      loadHabit();
     });
   };
 
@@ -225,6 +236,14 @@ const HabitDetails = () => {
           </div>
         </div>
       </motion.div>
+
+      {/* Completion Modal */}
+      <CompletionModal
+        isOpen={showCompletionModal}
+        onClose={() => setShowCompletionModal(false)}
+        streak={completionData.streak}
+        habitTitle={completionData.habitTitle}
+      />
     </div>
   );
 };

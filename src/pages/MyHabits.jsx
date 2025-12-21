@@ -8,11 +8,14 @@ import { FaEdit, FaTrash, FaCheckCircle, FaPlus, FaTrophy } from 'react-icons/fa
 import { MdOutlineTaskAlt } from 'react-icons/md';
 import axios from 'axios';
 import CompletedHabit, { isCompletedToday } from '../components/CompletedHabit';
+import CompletionModal from '../components/CompletionModal';
 
 const MyHabits = () => {
   const { user } = use(AuthContext);
   const navigate = useNavigate();
   const [habits, setHabits] = useState([]);
+  const [showCompletionModal, setShowCompletionModal] = useState(false);
+  const [completionData, setCompletionData] = useState({ streak: 0, habitTitle: '' });
 
   const loadHabits = () => {
     if (user?.email) {
@@ -59,8 +62,16 @@ const MyHabits = () => {
     const habit = habits.find(h => h._id === id);
     if (!habit) return;
     
-    CompletedHabit.markComplete(id, habit, () => {
-      loadHabits(); // Reload habits after successful completion
+    CompletedHabit.markComplete(id, habit, (data) => {
+      // Show completion modal with streak data
+      setCompletionData({
+        streak: data.currentStreak || 1,
+        habitTitle: habit.title
+      });
+      setShowCompletionModal(true);
+      
+      // Reload habits after successful completion
+      loadHabits();
     });
   };
 
@@ -201,6 +212,14 @@ const MyHabits = () => {
           </div>
         )}
       </motion.div>
+
+      {/* Completion Modal */}
+      <CompletionModal
+        isOpen={showCompletionModal}
+        onClose={() => setShowCompletionModal(false)}
+        streak={completionData.streak}
+        habitTitle={completionData.habitTitle}
+      />
     </div>
   );
 };
