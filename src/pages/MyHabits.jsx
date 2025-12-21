@@ -43,7 +43,7 @@ const MyHabits = () => {
       showCancelButton: true,
       confirmButtonColor: '#d33',
       cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes, delete :('
     }).then((result) => {
       if (result.isConfirmed) {
         axios.delete(`http://localhost:3000/habits/${id}`)
@@ -98,6 +98,22 @@ const MyHabits = () => {
     }
   };
 
+  const updateHabitDetails = async (formData) => {
+    axios.put(`http://localhost:3000/habits/${editingHabit._id}`, formData)
+      .then(res => {
+        console.log(res.data);
+        loadHabits();
+        toast.success('Habit updated successfully!');
+        document.getElementById('edit_modal').close();
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error updating habit:', err);
+        toast.error('Failed to update habit');
+        setLoading(false);
+      });
+  };
+
   const handleUpdate = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -117,23 +133,22 @@ const MyHabits = () => {
         imageUrl = await uploadImageToImageBB(imageFile);
       }
 
-      const updatedData = {
+      const formData = {
         title,
         description,
         category,
         reminderTime,
         imageUrl,
-        isPublic
+        isPublic,
+        userEmail: editingHabit.userEmail,
+        userName: editingHabit.userName,
+        createdAt: editingHabit.createdAt
       };
 
-      await axios.put(`http://localhost:3000/habits/${editingHabit._id}`, updatedData);
-      loadHabits();
-      toast.success('Habit updated successfully!');
-      document.getElementById('edit_modal').close();
+      updateHabitDetails(formData);
     } catch (err) {
       console.error('Error updating habit:', err);
       toast.error('Failed to update habit');
-    } finally {
       setLoading(false);
     }
   };
