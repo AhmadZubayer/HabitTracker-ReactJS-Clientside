@@ -100,210 +100,200 @@ const HabitDetails = () => {
         className="w-full"
         style={{ maxWidth: '1152px', margin: '0 auto' }}
       >
-        {/* Main Content Card */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 w-full" style={{ gap: '16px', marginBottom: '24px' }}>
-          {/* Left Section - Habit Details */}
-          <div className="lg:col-span-2 card shadow-xl rounded-3xl" style={{ backgroundColor: '#E3E3E3' }}>
-            <div className="card-body" style={{ padding: '24px' }}>
-              {/* Habit Header - Icon and Title side by side */}
-              <div className="flex items-start w-full" style={{ gap: '16px', marginBottom: '24px' }}>
-                {/* Habit Icon */}
-                <div className="avatar flex-shrink-0">
-                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-3xl bg-primary/10 flex items-center justify-center">
-                    <MdOutlineTaskAlt className="text-primary text-2xl md:text-3xl" />
+        {/* Main Grid Container */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 w-full" style={{ gap: '16px' }}>
+          {/* Div 1 - Top Row (Habit Card + Current Streak Card) */}
+          <div className="lg:col-span-2 grid grid-cols-1 lg:grid-cols-5" style={{ gap: '16px', marginBottom: '16px' }}>
+            {/* Div 1.1 - Habit Card (3/5 = 60%) */}
+            <div className="lg:col-span-3 card shadow-xl rounded-3xl" style={{ backgroundColor: '#E3E3E3', height: '100%' }}>
+              <div className="card-body" style={{ padding: '24px' }}>
+              {/* Habit Image and Info in horizontal layout */}
+              <div className="flex flex-col sm:flex-row items-start" style={{ gap: '16px' }}>
+                {/* Habit Image */}
+                <div className="w-full sm:w-48 flex-shrink-0">
+                  <div className="rounded-3xl overflow-hidden shadow-lg">
+                    <img
+                      src={habit.imageUrl || '/default-habit-img/51359.jpg'}
+                      alt={habit.title}
+                      className="w-full sm:h-full object-cover"
+                      style={{ height: '200px' }}
+                    />
                   </div>
                 </div>
-                
-                {/* Title, Category and Complete Button */}
+
+                {/* Icon, Habit Name and Details */}
                 <div className="flex-1 min-w-0">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-2">
-                    <h2 className="text-2xl md:text-3xl font-bold break-words">{habit.title}</h2>
+                  <div className="flex items-start" style={{ gap: '12px', marginBottom: '12px' }}>
+                    {/* Habit Icon */}
+                    <div className="avatar flex-shrink-0">
+                      <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                        <MdOutlineTaskAlt className="text-primary text-2xl md:text-3xl" />
+                      </div>
+                    </div>
                     
-                    {/* Mark Complete Button or Completed Status */}
-                    {isUserHabit && (
-                      completedToday ? (
-                        <div className="badge badge-success gap-2 px-3 py-2 md:px-6 md:py-4 text-xs md:text-base whitespace-nowrap flex-shrink-0">
+                    {/* Habit Name */}
+                    <div className="flex-1">
+                      <h2 className="text-2xl md:text-3xl font-bold break-words mb-2">{habit.title}</h2>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="badge badge-primary text-xs md:text-sm px-3 py-2">{habit.category}</span>
+                        <span className="badge badge-outline text-xs md:text-sm px-3 py-2">
+                          <FaClock className="mr-1" />
+                          {habit.reminderTime}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <div style={{ marginBottom: '12px' }}>
+                    <h3 className="text-base font-semibold text-gray-700" style={{ marginBottom: '6px' }}>Description</h3>
+                    <p className="text-gray-600 text-sm leading-relaxed">{habit.description}</p>
+                  </div>
+
+                  {/* Creator Info */}
+                  <div style={{ marginBottom: '16px' }}>
+                    <h3 className="text-base font-semibold text-gray-700" style={{ marginBottom: '6px' }}>Created by</h3>
+                    <div className="flex items-center bg-base-200 rounded-3xl" style={{ gap: '12px', padding: '12px' }}>
+                      <div className="avatar">
+                        <div className="w-10 rounded-full">
+                          <img
+                            src={habit.userPhotoURL || 'https://via.placeholder.com/50'}
+                            alt={habit.userName}
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-base">{habit.userName}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Mark Complete Button or Completed Status - At Bottom */}
+                  {isUserHabit && (
+                    <div>
+                      {completedToday ? (
+                        <div className="badge badge-success gap-2 px-3 py-2 md:px-6 md:py-4 text-xs md:text-base whitespace-nowrap">
                           <FaCalendarCheck className="text-sm md:text-lg" />
-                          <span className="hidden sm:inline">Completed for Today</span>
-                          <span className="sm:hidden">Done</span>
+                          <span>Completed for Today</span>
                         </div>
                       ) : (
                         <button
                           onClick={handleMarkComplete}
-                          className="btn-primary flex items-center justify-center gap-2 w-auto"
+                          className="btn-primary flex items-center justify-center gap-2 w-full sm:w-auto"
                         >
                           <FaCalendarCheck className="text-lg" />
-                          <span className="hidden sm:inline">Mark Complete</span>
-                          <span className="sm:hidden">Complete</span>
+                          <span>Mark Complete</span>
                         </button>
-                      )
-                    )}
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="badge badge-primary text-xs md:text-sm px-3 py-2">{habit.category}</span>
-                    <span className="badge badge-outline text-xs md:text-sm px-3 py-2">
-                      <FaClock className="mr-1" />
-                      {habit.reminderTime}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Description */}
-              <div style={{ marginBottom: '24px' }}>
-                <h3 className="text-lg font-semibold text-gray-700" style={{ marginBottom: '8px' }}>Description</h3>
-                <p className="text-gray-600 leading-relaxed">{habit.description}</p>
-              </div>
-
-              {/* Creator Info */}
-              <div style={{ marginBottom: '24px' }}>
-                <h3 className="text-lg font-semibold text-gray-700" style={{ marginBottom: '12px' }}>Created by</h3>
-                <div className="flex items-center bg-base-200 rounded-3xl" style={{ gap: '16px', padding: '16px' }}>
-                  <div className="avatar">
-                    <div className="w-12 rounded-full">
-                      <img
-                        src={habit.userPhotoURL || 'https://via.placeholder.com/50'}
-                        alt={habit.userName}
-                      />
+                      )}
                     </div>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-lg">{habit.userName}</p>
-                  </div>
+                  )}
                 </div>
               </div>
-
-              {/* Habit Image */}
-              {habit.imageUrl && (
-                <div style={{ marginBottom: '24px' }}>
-                  <h3 className="text-lg font-semibold text-gray-700" style={{ marginBottom: '12px' }}>Habit Image</h3>
-                  <div className="rounded-3xl overflow-hidden shadow-lg">
-                    <img
-                      src={habit.imageUrl}
-                      alt={habit.title}
-                      className="w-full h-auto object-cover"
-                    />
-                  </div>
-                </div>
-              )}
             </div>
           </div>
 
-          {/* Right Section - Streak Card */}
-          <div className="lg:col-span-1">
-            <div className="card shadow-xl rounded-3xl lg:sticky lg:top-4" style={{ backgroundColor: '#C2E7FF' }}>
-              <div className="card-body p-4 md:p-6">
-                <h3 className="text-lg md:text-xl font-bold text-center mb-4">Current Streak</h3>
+          {/* Div 1.2 - Current Streak Card (2/5 = 40%) */}
+          <div className="lg:col-span-2 card shadow-xl rounded-3xl" style={{ backgroundColor: '#C2E7FF', height: '100%' }}>
+            <div className="card-body flex flex-col justify-between" style={{ padding: '24px' }}>
+              <div>
+                <h3 className="text-lg font-bold text-center mb-4">Current Streak</h3>
                 
                 {/* Streak Display */}
-                <div className="text-center mb-4 md:mb-6">
-                  <div className="inline-flex items-center justify-center w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-orange-400 to-red-500 shadow-lg mb-3 md:mb-4">
+                <div className="text-center mb-6">
+                  <div className="inline-flex items-center justify-center w-28 h-28 md:w-32 md:h-32 rounded-full border-8 border-orange-500 bg-transparent shadow-lg mb-3">
                     <div className="text-center">
-                      <FaTrophy className="text-white text-2xl md:text-4xl mb-1 md:mb-2 mx-auto" />
-                      <p className="text-white text-2xl md:text-4xl font-bold">{habit.currentStreak || 0}</p>
+                      <FaTrophy className="text-orange-500 text-2xl md:text-3xl mb-1 mx-auto" />
+                      <p className="text-orange-500 text-3xl md:text-4xl font-bold">{habit.currentStreak || 0}</p>
                     </div>
                   </div>
-                  <p className="text-gray-600 font-semibold text-base md:text-lg">
+                  <p className="text-gray-600 font-semibold text-base">
                     Day{habit.currentStreak !== 1 ? 's' : ''} 🔥
                   </p>
                 </div>
+              </div>
 
-                {/* Streak Message */}
-                <div className="text-center mb-4 md:mb-6">
-                  <h4 className="text-base md:text-lg font-bold text-primary mb-2">
-                    {habit.currentStreak === 0 && "Start Your Journey!"}
-                    {habit.currentStreak > 0 && habit.currentStreak < 7 && "Building Momentum!"}
-                    {habit.currentStreak >= 7 && habit.currentStreak < 30 && "On Fire! 🔥"}
-                    {habit.currentStreak >= 30 && "Habit Master! 🏆"}
-                  </h4>
-                  <p className="text-gray-600 text-sm">
-                    {habit.currentStreak === 0 && "Begin your streak today!"}
-                    {habit.currentStreak > 0 && habit.currentStreak < 7 && "Keep going, you're doing great!"}
-                    {habit.currentStreak >= 7 && habit.currentStreak < 30 && "Consistency is key!"}
-                    {habit.currentStreak >= 30 && "You've mastered this habit!"}
-                  </p>
+              {/* Quick Stats */}
+              <div className="grid grid-cols-2 gap-2">
+                <div className="flex flex-col items-center p-3 bg-white rounded-xl">
+                  <span className="text-gray-600 font-medium text-xs mb-1">Total Completions</span>
+                  <span className="text-primary font-bold text-xl">{habit.completionHistory?.length || 0}</span>
                 </div>
-
-                {/* Quick Stats */}
-                <div className="space-y-2 md:space-y-3">
-                  <div className="flex justify-between items-center p-2 md:p-3 bg-white rounded-xl">
-                    <span className="text-gray-600 font-medium text-sm md:text-base">Total Completions</span>
-                    <span className="text-primary font-bold text-base md:text-lg">{habit.completionHistory?.length || 0}</span>
-                  </div>
-                  <div className="flex justify-between items-center p-2 md:p-3 bg-white rounded-xl">
-                    <span className="text-gray-600 font-medium text-sm md:text-base">Success Rate</span>
-                    <span className="text-success font-bold text-base md:text-lg">{completionRate}%</span>
-                  </div>
+                <div className="flex flex-col items-center p-3 bg-white rounded-xl">
+                  <span className="text-gray-600 font-medium text-xs mb-1">Success Rate</span>
+                  <span className="text-success font-bold text-xl">{completionRate}%</span>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+          </div>
 
-        {/* Progress Section */}
-        <div className="card shadow-xl rounded-3xl mb-6 md:mb-8" style={{ backgroundColor: '#C4EED0' }}>
-          <div className="card-body p-4 md:p-6">
-            <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Last 30 Days Progress</h3>
-            
-            {/* Progress Bar */}
-            <div className="mb-6">
-              <div className="flex justify-between mb-2">
-                <span className="font-semibold">Completion Rate</span>
-                <span className="font-bold" style={{ color: '#16a34a' }}>{completionRate}%</span>
+          {/* Div 2 - Bottom Row - 30 Days Streak Card (Full Width) */}
+          <div className="lg:col-span-2 w-full">
+          <div className="card shadow-xl rounded-3xl" style={{ backgroundColor: '#C4EED0' }}>
+            <div className="card-body p-4 md:p-6">
+              <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">30 Days Streak</h3>
+              
+              {/* Progress Bar */}
+              <div className="mb-6">
+                <div className="flex justify-between mb-2">
+                  <span className="font-semibold">Completion Rate</span>
+                  <span className="font-bold" style={{ color: '#16a34a' }}>{completionRate}%</span>
+                </div>
+                <div className="w-full bg-white rounded-full h-4 overflow-hidden">
+                  <div 
+                    className="h-full rounded-full transition-all duration-500"
+                    style={{ 
+                      width: `${completionRate}%`,
+                      backgroundColor: '#16a34a'
+                    }}
+                  ></div>
+                </div>
               </div>
-              <div className="w-full bg-white rounded-full h-4 overflow-hidden">
-                <div 
-                  className="h-full rounded-full transition-all duration-500"
-                  style={{ 
-                    width: `${completionRate}%`,
-                    backgroundColor: '#16a34a'
-                  }}
-                ></div>
-              </div>
-            </div>
 
-            {/* Calendar Grid */}
-            <div className="grid grid-cols-7 sm:grid-cols-10 lg:grid-cols-15 gap-1.5 sm:gap-2">
-              {progressData.map((day, index) => (
-                <div
-                  key={index}
-                  className={`tooltip ${day.completed ? 'tooltip-success' : 'tooltip-error'}`}
-                  data-tip={`${day.date}: ${day.completed ? 'Completed' : 'Missed'}`}
-                >
+              {/* Calendar Grid */}
+              <div className="grid grid-cols-7 sm:grid-cols-10 lg:grid-cols-15 gap-1.5 sm:gap-2">
+                {progressData.map((day, index) => (
                   <div
-                    className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-xs font-bold transition-all cursor-pointer ${
-                      day.completed
-                        ? 'bg-success text-white'
-                        : 'bg-base-300 text-gray-500'
-                    }`}
+                    key={index}
+                    className={`tooltip ${day.completed ? 'tooltip-success' : 'tooltip-error'}`}
+                    data-tip={`${day.date}: ${day.completed ? 'Completed' : 'Missed'}`}
                   >
-                    {day.day}
+                    <div
+                      className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-xs font-bold transition-all cursor-pointer ${
+                        day.completed
+                          ? 'bg-success text-white'
+                          : 'bg-base-300 text-gray-500'
+                      }`}
+                    >
+                      {day.day}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-6 md:mt-8">
+                <div className="stat bg-base-200 rounded-3xl p-3 md:p-4">
+                  <div className="stat-title text-xs md:text-sm">Total Completions</div>
+                  <div className="stat-value text-primary text-2xl md:text-3xl">{habit.completionHistory?.length || 0}</div>
+                </div>
+                <div className="stat bg-base-200 rounded-3xl p-3 md:p-4">
+                  <div className="stat-title text-xs md:text-sm">Current Streak</div>
+                  <div className="stat-value text-success text-2xl md:text-3xl">{habit.currentStreak || 0}</div>
+                </div>
+                <div className="stat bg-base-200 rounded-3xl p-3 md:p-4">
+                  <div className="stat-title text-xs md:text-sm">Last 30 Days</div>
+                  <div className="stat-value text-warning text-2xl md:text-3xl">
+                    {progressData.filter(d => d.completed).length}
                   </div>
                 </div>
-              ))}
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-6 md:mt-8">
-              <div className="stat bg-base-200 rounded-3xl p-3 md:p-4">
-                <div className="stat-title text-xs md:text-sm">Total Completions</div>
-                <div className="stat-value text-primary text-2xl md:text-3xl">{habit.completionHistory?.length || 0}</div>
-              </div>
-              <div className="stat bg-base-200 rounded-3xl p-3 md:p-4">
-                <div className="stat-title text-xs md:text-sm">Current Streak</div>
-                <div className="stat-value text-success text-2xl md:text-3xl">{habit.currentStreak || 0}</div>
-              </div>
-              <div className="stat bg-base-200 rounded-3xl p-3 md:p-4">
-                <div className="stat-title text-xs md:text-sm">Last 30 Days</div>
-                <div className="stat-value text-warning text-2xl md:text-3xl">
-                  {progressData.filter(d => d.completed).length}
+                <div className="stat bg-base-200 rounded-3xl p-3 md:p-4">
+                  <div className="stat-title text-xs md:text-sm">Success Rate</div>
+                  <div className="stat-value text-info text-2xl md:text-3xl">{completionRate}%</div>
                 </div>
               </div>
-              <div className="stat bg-base-200 rounded-3xl p-3 md:p-4">
-                <div className="stat-title text-xs md:text-sm">Success Rate</div>
-                <div className="stat-value text-info text-2xl md:text-3xl">{completionRate}%</div>
-              </div>
             </div>
+          </div>
           </div>
         </div>
       </motion.div>
