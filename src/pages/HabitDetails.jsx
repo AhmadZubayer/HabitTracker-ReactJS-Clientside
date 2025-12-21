@@ -5,6 +5,7 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import { FaTrophy, FaCalendarCheck, FaClock, FaUser } from 'react-icons/fa';
+import { completeHabit } from '../utils/habitUtils';
 
 const HabitDetails = () => {
   const { id } = useParams();
@@ -48,22 +49,12 @@ const HabitDetails = () => {
     loadHabit();
   }, [id]);
 
-  const handleMarkComplete = async () => {
-    const today = new Date().toISOString().split('T')[0];
+  const handleMarkComplete = () => {
+    if (!habit) return;
     
-    if (habit.completionHistory.includes(today)) {
-      toast.error('Already completed today!');
-      return;
-    }
-
-    try {
-      await axios.patch(`http://localhost:3000/habits/${id}/complete`, { date: today });
-      loadHabit();
-      toast.success('Habit marked as complete! 🎉');
-    } catch (error) {
-      console.error('Error marking habit complete:', error);
-      toast.error('Failed to mark habit as complete');
-    }
+    completeHabit(id, habit, () => {
+      loadHabit(); // Reload habit after successful completion
+    });
   };
 
   const getStreakBadgeColor = (streak) => {
@@ -195,11 +186,11 @@ const HabitDetails = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
               <div className="stat bg-base-200 rounded-lg p-4">
                 <div className="stat-title">Total Completions</div>
-                <div className="stat-value text-primary">{habit.completionHistory.length}</div>
+                <div className="stat-value text-primary">{habit.completionHistory?.length || 0}</div>
               </div>
               <div className="stat bg-base-200 rounded-lg p-4">
                 <div className="stat-title">Current Streak</div>
-                <div className="stat-value text-success">{habit.currentStreak}</div>
+                <div className="stat-value text-success">{habit.currentStreak || 0}</div>
               </div>
               <div className="stat bg-base-200 rounded-lg p-4">
                 <div className="stat-title">Last 30 Days</div>

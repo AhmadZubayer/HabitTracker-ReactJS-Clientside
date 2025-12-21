@@ -4,6 +4,7 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import AddHabit from '../pages/AddHabit';
+import UpdateHabit from '../pages/UpdateHabit';
 import MyHabits from '../pages/MyHabits';
 import BrowseHabits from '../pages/BrowseHabits';
 import HabitDetails from '../pages/HabitDetails';
@@ -30,6 +31,10 @@ const Router = createBrowserRouter([
       {
         path: "/add-habit",
         element: <PrivateRoute><AddHabit /></PrivateRoute>
+      },
+      {
+        path: "/update-habit/:id",
+        element: <PrivateRoute><UpdateHabit /></PrivateRoute>
       },
       {
         path: "/my-habits",

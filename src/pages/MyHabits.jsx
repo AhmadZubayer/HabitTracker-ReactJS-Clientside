@@ -1,22 +1,18 @@
 import React, { use, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { AuthContext } from '../context/AuthContext';
-import { uploadImageToImageBB } from '../utils/imageUpload';
 import { toast } from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import { motion } from 'framer-motion';
 import { FaEdit, FaTrash, FaCheckCircle, FaPlus, FaTrophy } from 'react-icons/fa';
 import { MdOutlineTaskAlt } from 'react-icons/md';
 import axios from 'axios';
+import { completeHabit, isCompletedToday } from '../utils/habitUtils';
 
 const MyHabits = () => {
   const { user } = use(AuthContext);
+  const navigate = useNavigate();
   const [habits, setHabits] = useState([]);
-  const [editingHabit, setEditingHabit] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
-
-  const categories = ['Morning', 'Work', 'Fitness', 'Evening', 'Study'];
 
   const loadHabits = () => {
     if (user?.email) {
@@ -60,97 +56,16 @@ const MyHabits = () => {
   };
 
   const handleMarkComplete = (id) => {
-    const today = new Date().toISOString().split('T')[0];
     const habit = habits.find(h => h._id === id);
+    if (!habit) return;
     
-    if (habit.completionHistory.includes(today)) {
-      toast.error('Already completed today!');
-      return;
-    }
-
-    axios.patch(`http://localhost:3000/habits/${id}/complete`, { date: today })
-      .then(() => {
-        loadHabits();
-        toast.success('Habit marked as complete! 🎉');
-      })
-      .catch(err => {
-        console.error('Error marking habit complete:', err);
-        toast.error('Failed to mark habit complete');
-      });
+    completeHabit(id, habit, () => {
+      loadHabits(); // Reload habits after successful completion
+    });
   };
 
-  const handleEdit = (habit) => {
-    setEditingHabit(habit);
-    setImageFile(null);
-    setImagePreview(null);
-    document.getElementById('edit_modal').showModal();
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImageFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const updateHabitDetails = async (formData) => {
-    axios.put(`http://localhost:3000/habits/${editingHabit._id}`, formData)
-      .then(res => {
-        console.log(res.data);
-        loadHabits();
-        toast.success('Habit updated successfully!');
-        document.getElementById('edit_modal').close();
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error('Error updating habit:', err);
-        toast.error('Failed to update habit');
-        setLoading(false);
-      });
-  };
-
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const form = e.target;
-    const title = form.title.value;
-    const description = form.description.value;
-    const category = form.category.value;
-    const reminderTime = form.reminderTime.value;
-    const isPublic = form.isPublic.checked;
-
-    try {
-      let imageUrl = editingHabit.imageUrl;
-
-      // Upload new image if provided
-      if (imageFile) {
-        imageUrl = await uploadImageToImageBB(imageFile);
-      }
-
-      const formData = {
-        title,
-        description,
-        category,
-        reminderTime,
-        imageUrl,
-        isPublic,
-        userEmail: editingHabit.userEmail,
-        userName: editingHabit.userName,
-        createdAt: editingHabit.createdAt
-      };
-
-      updateHabitDetails(formData);
-    } catch (err) {
-      console.error('Error updating habit:', err);
-      toast.error('Failed to update habit');
-      setLoading(false);
-    }
+  const handleEdit = (habitId) => {
+    navigate(`/update-habit/${habitId}`);
   };
 
   const formatDate = (dateString) => {
@@ -197,6 +112,8 @@ const MyHabits = () => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3 }}
+                    className="cursor-pointer hover:bg-base-200"
+                    onClick={() => navigate(`/habit/${habit._id}`)}
                   >
                       <td>
                         <div className="flex items-center gap-3">
@@ -236,21 +153,40 @@ const MyHabits = () => {
                     <td>
                       <div className="flex gap-3">
                         <button
-                          onClick={() => handleMarkComplete(habit._id)}
-                          className="p-2 border-2 border-green-600 text-green-600 hover:bg-green-50 rounded-lg transition-all"
-                          title="Mark Complete"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const today = new Date().toISOString().split('T')[0];
+                            if (habit.completionHistory && habit.completionHistory.includes(today)) {
+                              toast.error('Already completed today!');
+                            } else {
+                              handleMarkComplete(habit._id);
+                            }
+                          }}
+                          className={`p-2 border-2 rounded-lg transition-all ${
+                            isCompletedToday(habit)
+                              ? 'border-gray-400 text-gray-400 cursor-not-allowed'
+                              : 'border-green-600 text-green-600 hover:bg-green-50'
+                          }`}
+                          title={isCompletedToday(habit) ? 'Completed Today' : 'Mark Complete'}
+                          disabled={isCompletedToday(habit)}
                         >
                           <FaCheckCircle className="text-lg" />
                         </button>
                         <button
-                          onClick={() => handleEdit(habit)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleEdit(habit._id);
+                          }}
                           className="p-2 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
                           title="Edit"
                         >
                           <FaEdit className="text-lg" />
                         </button>
                         <button
-                          onClick={() => handleDelete(habit._id, habit.title)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDelete(habit._id, habit.title);
+                          }}
                           className="p-2 border-2 border-red-600 text-red-600 hover:bg-red-50 rounded-lg transition-all"
                           title="Delete"
                         >
@@ -265,173 +201,6 @@ const MyHabits = () => {
           </div>
         )}
       </motion.div>
-
-      {/* Edit Modal */}
-      <dialog id="edit_modal" className="modal">
-        <div className="modal-box max-w-2xl max-h-[90vh] overflow-y-auto">
-          <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-          </form>
-          <h3 className="text-4xl font-bold text-center mb-2 text-[#1085F1]">Edit Habit</h3>
-          <p className="text-gray-600 text-center mb-8">Update your habit details</p>
-          
-          {editingHabit && (
-            <form onSubmit={handleUpdate} className="space-y-6">
-              {/* Habit Title */}
-              <div>
-                <label className="label font-semibold text-gray-700">
-                  <span className="label-text">Habit Title *</span>
-                </label>
-                <input
-                  type="text"
-                  name="title"
-                  placeholder="e.g., Morning Meditation"
-                  defaultValue={editingHabit.title}
-                  className="input input-bordered w-full rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1085F1] transition-all"
-                  required
-                />
-              </div>
-
-              {/* Description */}
-              <div>
-                <label className="label font-semibold text-gray-700">
-                  <span className="label-text">Description *</span>
-                </label>
-                <textarea
-                  name="description"
-                  placeholder="Describe your habit and why it's important to you..."
-                  defaultValue={editingHabit.description}
-                  className="textarea textarea-bordered w-full h-24 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1085F1] transition-all resize-none"
-                  required
-                ></textarea>
-              </div>
-
-              {/* Category */}
-              <div>
-                <label className="label font-semibold text-gray-700">
-                  <span className="label-text">Category *</span>
-                </label>
-                <select
-                  name="category"
-                  defaultValue={editingHabit.category}
-                  className="select select-bordered w-full rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1085F1] transition-all"
-                  required
-                >
-                  {categories.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Reminder Time */}
-              <div>
-                <label className="label font-semibold text-gray-700">
-                  <span className="label-text">Reminder Time *</span>
-                </label>
-                <input
-                  type="time"
-                  name="reminderTime"
-                  defaultValue={editingHabit.reminderTime}
-                  className="input input-bordered w-full rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1085F1] transition-all"
-                  required
-                />
-              </div>
-
-              {/* Image Upload */}
-              <div>
-                <label className="label font-semibold text-gray-700">
-                  <span className="label-text">Habit Image (Optional)</span>
-                </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="file-input file-input-bordered w-full rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1085F1] transition-all"
-                />
-                {imagePreview ? (
-                  <div className="mt-4">
-                    <img
-                      src={imagePreview}
-                      alt="Preview"
-                      className="w-full max-w-xs rounded-xl shadow-lg mx-auto"
-                    />
-                  </div>
-                ) : editingHabit.imageUrl ? (
-                  <div className="mt-4">
-                    <img
-                      src={editingHabit.imageUrl}
-                      alt="Current"
-                      className="w-full max-w-xs rounded-xl shadow-lg mx-auto"
-                    />
-                  </div>
-                ) : null}
-              </div>
-
-              {/* User Name (Read-only) */}
-              <div>
-                <label className="label font-semibold text-gray-700">
-                  <span className="label-text">Your Name</span>
-                </label>
-                <input
-                  type="text"
-                  value={user?.displayName || 'Anonymous'}
-                  className="input input-bordered w-full rounded-xl bg-gray-50"
-                  readOnly
-                  disabled
-                />
-              </div>
-
-              {/* User Email (Read-only) */}
-              <div>
-                <label className="label font-semibold text-gray-700">
-                  <span className="label-text">Your Email</span>
-                </label>
-                <input
-                  type="email"
-                  value={user?.email || ''}
-                  className="input input-bordered w-full rounded-xl bg-gray-50"
-                  readOnly
-                  disabled
-                />
-              </div>
-
-              {/* Public/Private Toggle */}
-              <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
-                <input
-                  type="checkbox"
-                  name="isPublic"
-                  className="checkbox checkbox-primary"
-                  defaultChecked={editingHabit.isPublic}
-                  id="isPublicEdit"
-                />
-                <label htmlFor="isPublicEdit" className="font-semibold text-gray-700 cursor-pointer">
-                  Make this habit public (visible to others)
-                </label>
-              </div>
-
-              {/* Submit Button */}
-              <div className="mt-8">
-                <button
-                  type="submit"
-                  className="btn-primary w-full rounded-xl py-3 font-semibold text-lg"
-                  disabled={loading}
-                >
-                  {loading ? (
-                    <>
-                      <span className="loading loading-spinner loading-sm"></span>
-                      Updating Habit...
-                    </>
-                  ) : (
-                    'Update Habit'
-                  )}
-                </button>
-              </div>
-            </form>
-          )}
-        </div>
-      </dialog>
     </div>
   );
 };
