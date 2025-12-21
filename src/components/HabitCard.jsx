@@ -13,20 +13,14 @@ const HabitCard = ({ habit, variants }) => {
     >
       {/* Habit Image/Banner */}
       <figure className="h-44 bg-gradient-to-br from-blue-500 to-blue-600 relative overflow-hidden">
-        {habit.imageUrl ? (
-          <img
-            src={habit.imageUrl}
-            alt={habit.title}
-            className="w-full h-full object-cover transition-all duration-300 group-hover:brightness-50"
-          />
-        ) : (
-          <div className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
-            <MdOutlineTaskAlt className="text-white text-6xl opacity-30" />
-          </div>
-        )}
-        {/* Description Overlay on Hover */}
-        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center p-4">
-          <p className="text-white text-sm text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-medium">
+        <img
+          src={habit.imageUrl || '/default-habit-img/51359.jpg'}
+          alt={habit.title}
+          className="w-full h-full object-cover transition-all duration-300 group-hover:brightness-50"
+        />
+        {/* Hover Description Overlay */}
+        <div className="absolute inset-0 flex items-center justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <p className="text-white text-sm text-center line-clamp-6">
             {habit.description}
           </p>
         </div>
