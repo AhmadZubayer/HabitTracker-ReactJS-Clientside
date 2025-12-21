@@ -1,16 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { motion } from 'framer-motion';
-import { FaTrophy, FaEye } from 'react-icons/fa';
+import { FaTrophy, FaEye, FaStar } from 'react-icons/fa';
+import { MdOutlineTaskAlt } from 'react-icons/md';
 
 const HabitCard = ({ habit, variants }) => {
   return (
     <motion.div
       variants={variants}
-      className="card bg-base-100 shadow-xl rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+      className="card bg-base-100 shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300"
+      style={{ borderRadius: '20px' }}
     >
-      {/* Habit Image */}
-      <figure className="h-40 bg-gradient-to-br from-primary/20 to-secondary/20">
+      {/* Habit Image/Banner */}
+      <figure className="h-44 bg-gradient-to-br from-blue-500 to-blue-600 relative overflow-hidden">
         <img
           src={habit.imageUrl || '/default-habit-img/51359.jpg'}
           alt={habit.title}
@@ -19,33 +21,34 @@ const HabitCard = ({ habit, variants }) => {
       </figure>
 
       {/* Card Body */}
-      <div className="card-body p-3">
-        {/* Habit Title */}
-        <h3 className="card-title text-sm font-bold line-clamp-2 min-h-[2.5rem]">
-          {habit.title}
-        </h3>
-
-        {/* Rating/Streak Section */}
-        <div className="flex items-center gap-2 my-1">
-          <div className="flex items-center gap-1">
-            <span className="text-base font-bold">{habit.currentStreak || 0}</span>
-            <FaTrophy className="text-warning text-sm" />
+      <div style={{ padding: '16px' }}>
+        {/* Habit Icon and Title */}
+        <div className="flex items-start gap-3 mb-3">
+          <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+            <MdOutlineTaskAlt className="text-blue-600 text-2xl" />
           </div>
-          <div className="w-1.5 h-1.5 rounded-full bg-gray-400"></div>
-          <span className="text-xs text-gray-500">{habit.category}</span>
+          <div className="flex-1 min-w-0">
+            <h3 className="font-bold text-base line-clamp-1 mb-1">
+              {habit.title}
+            </h3>
+            <div className="flex items-center gap-1 text-sm">
+              <span className="font-semibold">{habit.currentStreak || 0}</span>
+              <FaStar className="text-yellow-500 text-xs" />
+            </div>
+          </div>
         </div>
 
         {/* Description */}
-        <p className="text-xs text-gray-600 line-clamp-2 mb-2">
+        <p className="text-sm text-gray-600 line-clamp-2 mb-4">
           {habit.description}
         </p>
 
         {/* See Details Button */}
         <Link
           to={`/habit/${habit._id}`}
-          className="btn btn-xs btn-outline btn-primary w-full rounded-lg"
+          className="btn btn-sm btn-outline btn-primary w-full"
+          style={{ borderRadius: '8px' }}
         >
-          <FaEye className="mr-1" />
           See Details
         </Link>
       </div>
