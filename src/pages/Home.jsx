@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router';
 import Banner from '../components/Banner';
+import HabitCard from '../components/HabitCard';
 import axios from 'axios';
 import { 
   FaBullseye, 
@@ -12,7 +13,8 @@ import {
   FaBrain,
   FaHeart,
   FaClock,
-  FaPlus
+  FaPlus,
+  FaEye
 } from 'react-icons/fa';
 import { MdOutlineTaskAlt } from 'react-icons/md';
 
@@ -20,8 +22,8 @@ const Home = () => {
   const [featuredHabits, setFeaturedHabits] = useState([]);
 
   useEffect(() => {
-    // Fetch 6 newest public habits
-    axios.get('http://localhost:3000/habits/public?limit=6')
+    // Fetch 4 newest public habits
+    axios.get('http://localhost:3000/habits/public?limit=4')
       .then(res => {
         setFeaturedHabits(res.data);
       })
@@ -50,13 +52,13 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       {/* Hero Banner Section with Swiper */}
       <Banner />
 
       {/* Featured Habits Section */}
-      <section className="py-20 bg-base-100">
-        <div className="max-w-7xl mx-auto px-4">
+      <section className="bg-base-100" style={{ paddingTop: '80px', paddingBottom: '80px' }}>
+        <div className="w-full" style={{ maxWidth: '1280px', margin: '0 auto', paddingLeft: '12px', paddingRight: '12px' }}>
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -72,48 +74,11 @@ const Home = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
           >
             {featuredHabits.length > 0 ? (
               featuredHabits.map((habit) => (
-                <motion.div
-                  key={habit._id}
-                  variants={itemVariants}
-                  className="card bg-base-100 shadow-xl rounded-3xl overflow-hidden hover:shadow-2xl transition-shadow"
-                >
-                  <figure className="h-48 overflow-hidden bg-base-200 flex items-center justify-center">
-                    {habit.imageUrl ? (
-                      <img
-                        src={habit.imageUrl}
-                        alt={habit.title}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <MdOutlineTaskAlt className="text-primary text-6xl" />
-                    )}
-                  </figure>
-                  <div className="card-body">
-                    <h3 className="card-title">{habit.title}</h3>
-                    <p className="text-sm text-gray-600 line-clamp-2">{habit.description}</p>
-                    <div className="flex items-center gap-2 mt-2">
-                      <span className="badge badge-primary">{habit.category}</span>
-                      <span className="text-sm">🔥 {habit.currentStreak} day streak</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm mt-2">
-                      <div className="avatar">
-                        <div className="w-6 rounded-full">
-                          <img src={habit.userPhotoURL || 'https://via.placeholder.com/40'} alt={habit.userName} />
-                        </div>
-                      </div>
-                      <span>{habit.userName}</span>
-                    </div>
-                    <div className="card-actions justify-end mt-4">
-                      <Link to={`/habit/${habit._id}`} className="btn btn-primary btn-sm">
-                        View Details
-                      </Link>
-                    </div>
-                  </div>
-                </motion.div>
+                <HabitCard key={habit._id} habit={habit} variants={itemVariants} />
               ))
             ) : (
               <div className="col-span-full text-center py-12">

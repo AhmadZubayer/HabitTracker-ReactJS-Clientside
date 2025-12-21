@@ -92,34 +92,57 @@ const HabitDetails = () => {
   const completedToday = habit.completionHistory?.includes(new Date().toISOString().split('T')[0]);
 
   return (
-    <div className="min-h-screen bg-base-200 py-12 px-4">
+    <div className="min-h-screen bg-base-200 overflow-x-hidden" style={{ paddingTop: '24px', paddingBottom: '24px', paddingLeft: '12px', paddingRight: '12px' }}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-6xl mx-auto"
+        className="w-full"
+        style={{ maxWidth: '1152px', margin: '0 auto' }}
       >
         {/* Main Content Card */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 w-full" style={{ gap: '16px', marginBottom: '24px' }}>
           {/* Left Section - Habit Details */}
-          <div className="lg:col-span-2 card bg-base-100 shadow-xl">
-            <div className="card-body p-8">
+          <div className="lg:col-span-2 card shadow-xl rounded-3xl" style={{ backgroundColor: '#E3E3E3' }}>
+            <div className="card-body" style={{ padding: '24px' }}>
               {/* Habit Header - Icon and Title side by side */}
-              <div className="flex items-start gap-4 mb-6">
+              <div className="flex items-start w-full" style={{ gap: '16px', marginBottom: '24px' }}>
                 {/* Habit Icon */}
                 <div className="avatar flex-shrink-0">
-                  <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
-                    <MdOutlineTaskAlt className="text-primary text-3xl" />
+                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-3xl bg-primary/10 flex items-center justify-center">
+                    <MdOutlineTaskAlt className="text-primary text-2xl md:text-3xl" />
                   </div>
                 </div>
                 
-                {/* Title and Category */}
-                <div className="flex-1">
-                  <h2 className="text-3xl font-bold mb-2">{habit.title}</h2>
+                {/* Title, Category and Complete Button */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-2">
+                    <h2 className="text-2xl md:text-3xl font-bold break-words">{habit.title}</h2>
+                    
+                    {/* Mark Complete Button or Completed Status */}
+                    {isUserHabit && (
+                      completedToday ? (
+                        <div className="badge badge-success gap-2 px-3 py-2 md:px-6 md:py-4 text-xs md:text-base whitespace-nowrap flex-shrink-0">
+                          <FaCalendarCheck className="text-sm md:text-lg" />
+                          <span className="hidden sm:inline">Completed for Today</span>
+                          <span className="sm:hidden">Done</span>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={handleMarkComplete}
+                          className="btn btn-success btn-sm sm:btn-md md:btn-lg rounded-3xl px-4 sm:px-6 md:px-8 text-sm sm:text-base md:text-lg w-auto sm:w-auto"
+                        >
+                          <FaCalendarCheck className="mr-1 sm:mr-2 text-base sm:text-lg md:text-xl" />
+                          <span className="hidden sm:inline">Mark Complete</span>
+                          <span className="sm:hidden">Complete</span>
+                        </button>
+                      )
+                    )}
+                  </div>
                   <div className="flex flex-wrap gap-2">
-                    <span className="badge badge-primary badge-lg">{habit.category}</span>
-                    <span className="badge badge-outline badge-lg">
-                      <FaClock className="mr-2" />
+                    <span className="badge badge-primary text-xs md:text-sm px-3 py-2">{habit.category}</span>
+                    <span className="badge badge-outline text-xs md:text-sm px-3 py-2">
+                      <FaClock className="mr-1" />
                       {habit.reminderTime}
                     </span>
                   </div>
@@ -127,15 +150,15 @@ const HabitDetails = () => {
               </div>
 
               {/* Description */}
-              <div className="mb-6">
-                <h3 className="text-lg font-semibold text-gray-700 mb-2">Description</h3>
+              <div style={{ marginBottom: '24px' }}>
+                <h3 className="text-lg font-semibold text-gray-700" style={{ marginBottom: '8px' }}>Description</h3>
                 <p className="text-gray-600 leading-relaxed">{habit.description}</p>
               </div>
 
               {/* Creator Info */}
-              <div className="mb-6">
-                <h3 className="text-lg font-semibold text-gray-700 mb-3">Created by</h3>
-                <div className="flex items-center gap-4 p-4 bg-base-200 rounded-xl">
+              <div style={{ marginBottom: '24px' }}>
+                <h3 className="text-lg font-semibold text-gray-700" style={{ marginBottom: '12px' }}>Created by</h3>
+                <div className="flex items-center bg-base-200 rounded-3xl" style={{ gap: '16px', padding: '16px' }}>
                   <div className="avatar">
                     <div className="w-12 rounded-full">
                       <img
@@ -146,16 +169,15 @@ const HabitDetails = () => {
                   </div>
                   <div>
                     <p className="font-semibold text-lg">{habit.userName}</p>
-                    <p className="text-sm text-gray-600">{habit.userEmail}</p>
                   </div>
                 </div>
               </div>
 
               {/* Habit Image */}
               {habit.imageUrl && (
-                <div className="mb-6">
-                  <h3 className="text-lg font-semibold text-gray-700 mb-3">Habit Image</h3>
-                  <div className="rounded-2xl overflow-hidden shadow-lg">
+                <div style={{ marginBottom: '24px' }}>
+                  <h3 className="text-lg font-semibold text-gray-700" style={{ marginBottom: '12px' }}>Habit Image</h3>
+                  <div className="rounded-3xl overflow-hidden shadow-lg">
                     <img
                       src={habit.imageUrl}
                       alt={habit.title}
@@ -164,51 +186,31 @@ const HabitDetails = () => {
                   </div>
                 </div>
               )}
-
-              {/* Mark Complete Button or Completed Status */}
-              {isUserHabit && (
-                <div className="mt-6">
-                  {completedToday ? (
-                    <div className="alert alert-success">
-                      <FaCalendarCheck className="text-2xl" />
-                      <span className="text-lg font-semibold">Completed for Today! 🎉</span>
-                    </div>
-                  ) : (
-                    <button
-                      onClick={handleMarkComplete}
-                      className="btn btn-success btn-lg w-full"
-                    >
-                      <FaCalendarCheck className="mr-2" />
-                      Mark Complete for Today
-                    </button>
-                  )}
-                </div>
-              )}
             </div>
           </div>
 
           {/* Right Section - Streak Card */}
           <div className="lg:col-span-1">
-            <div className="card bg-gray-100 shadow-xl rounded-3xl sticky top-4">
-              <div className="card-body p-6">
-                <h3 className="text-xl font-bold text-center mb-4">Current Streak</h3>
+            <div className="card shadow-xl rounded-3xl lg:sticky lg:top-4" style={{ backgroundColor: '#C2E7FF' }}>
+              <div className="card-body p-4 md:p-6">
+                <h3 className="text-lg md:text-xl font-bold text-center mb-4">Current Streak</h3>
                 
                 {/* Streak Display */}
-                <div className="text-center mb-6">
-                  <div className="inline-flex items-center justify-center w-32 h-32 rounded-full bg-gradient-to-br from-orange-400 to-red-500 shadow-lg mb-4">
+                <div className="text-center mb-4 md:mb-6">
+                  <div className="inline-flex items-center justify-center w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-orange-400 to-red-500 shadow-lg mb-3 md:mb-4">
                     <div className="text-center">
-                      <FaTrophy className="text-white text-4xl mb-2 mx-auto" />
-                      <p className="text-white text-4xl font-bold">{habit.currentStreak || 0}</p>
+                      <FaTrophy className="text-white text-2xl md:text-4xl mb-1 md:mb-2 mx-auto" />
+                      <p className="text-white text-2xl md:text-4xl font-bold">{habit.currentStreak || 0}</p>
                     </div>
                   </div>
-                  <p className="text-gray-600 font-semibold text-lg">
+                  <p className="text-gray-600 font-semibold text-base md:text-lg">
                     Day{habit.currentStreak !== 1 ? 's' : ''} 🔥
                   </p>
                 </div>
 
                 {/* Streak Message */}
-                <div className="text-center mb-6">
-                  <h4 className="text-lg font-bold text-primary mb-2">
+                <div className="text-center mb-4 md:mb-6">
+                  <h4 className="text-base md:text-lg font-bold text-primary mb-2">
                     {habit.currentStreak === 0 && "Start Your Journey!"}
                     {habit.currentStreak > 0 && habit.currentStreak < 7 && "Building Momentum!"}
                     {habit.currentStreak >= 7 && habit.currentStreak < 30 && "On Fire! 🔥"}
@@ -223,14 +225,14 @@ const HabitDetails = () => {
                 </div>
 
                 {/* Quick Stats */}
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center p-3 bg-white rounded-xl">
-                    <span className="text-gray-600 font-medium">Total Completions</span>
-                    <span className="text-primary font-bold text-lg">{habit.completionHistory?.length || 0}</span>
+                <div className="space-y-2 md:space-y-3">
+                  <div className="flex justify-between items-center p-2 md:p-3 bg-white rounded-xl">
+                    <span className="text-gray-600 font-medium text-sm md:text-base">Total Completions</span>
+                    <span className="text-primary font-bold text-base md:text-lg">{habit.completionHistory?.length || 0}</span>
                   </div>
-                  <div className="flex justify-between items-center p-3 bg-white rounded-xl">
-                    <span className="text-gray-600 font-medium">Success Rate</span>
-                    <span className="text-success font-bold text-lg">{completionRate}%</span>
+                  <div className="flex justify-between items-center p-2 md:p-3 bg-white rounded-xl">
+                    <span className="text-gray-600 font-medium text-sm md:text-base">Success Rate</span>
+                    <span className="text-success font-bold text-base md:text-lg">{completionRate}%</span>
                   </div>
                 </div>
               </div>
@@ -239,25 +241,29 @@ const HabitDetails = () => {
         </div>
 
         {/* Progress Section */}
-        <div className="card bg-base-100 shadow-xl mb-8">
-          <div className="card-body">
-            <h3 className="text-2xl font-bold mb-4">Last 30 Days Progress</h3>
+        <div className="card shadow-xl rounded-3xl mb-6 md:mb-8" style={{ backgroundColor: '#C4EED0' }}>
+          <div className="card-body p-4 md:p-6">
+            <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Last 30 Days Progress</h3>
             
             {/* Progress Bar */}
             <div className="mb-6">
               <div className="flex justify-between mb-2">
                 <span className="font-semibold">Completion Rate</span>
-                <span className="font-bold text-primary">{completionRate}%</span>
+                <span className="font-bold" style={{ color: '#16a34a' }}>{completionRate}%</span>
               </div>
-              <progress
-                className="progress progress-primary w-full h-4"
-                value={completionRate}
-                max="100"
-              ></progress>
+              <div className="w-full bg-white rounded-full h-4 overflow-hidden">
+                <div 
+                  className="h-full rounded-full transition-all duration-500"
+                  style={{ 
+                    width: `${completionRate}%`,
+                    backgroundColor: '#16a34a'
+                  }}
+                ></div>
+              </div>
             </div>
 
             {/* Calendar Grid */}
-            <div className="grid grid-cols-10 md:grid-cols-15 gap-2">
+            <div className="grid grid-cols-7 sm:grid-cols-10 lg:grid-cols-15 gap-1.5 sm:gap-2">
               {progressData.map((day, index) => (
                 <div
                   key={index}
@@ -265,7 +271,7 @@ const HabitDetails = () => {
                   data-tip={`${day.date}: ${day.completed ? 'Completed' : 'Missed'}`}
                 >
                   <div
-                    className={`w-8 h-8 rounded flex items-center justify-center text-xs font-bold transition-all cursor-pointer ${
+                    className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-xs font-bold transition-all cursor-pointer ${
                       day.completed
                         ? 'bg-success text-white'
                         : 'bg-base-300 text-gray-500'
@@ -278,45 +284,26 @@ const HabitDetails = () => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-              <div className="stat bg-base-200 rounded-lg p-4">
-                <div className="stat-title">Total Completions</div>
-                <div className="stat-value text-primary">{habit.completionHistory?.length || 0}</div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-6 md:mt-8">
+              <div className="stat bg-base-200 rounded-3xl p-3 md:p-4">
+                <div className="stat-title text-xs md:text-sm">Total Completions</div>
+                <div className="stat-value text-primary text-2xl md:text-3xl">{habit.completionHistory?.length || 0}</div>
               </div>
-              <div className="stat bg-base-200 rounded-lg p-4">
-                <div className="stat-title">Current Streak</div>
-                <div className="stat-value text-success">{habit.currentStreak || 0}</div>
+              <div className="stat bg-base-200 rounded-3xl p-3 md:p-4">
+                <div className="stat-title text-xs md:text-sm">Current Streak</div>
+                <div className="stat-value text-success text-2xl md:text-3xl">{habit.currentStreak || 0}</div>
               </div>
-              <div className="stat bg-base-200 rounded-lg p-4">
-                <div className="stat-title">Last 30 Days</div>
-                <div className="stat-value text-warning">
+              <div className="stat bg-base-200 rounded-3xl p-3 md:p-4">
+                <div className="stat-title text-xs md:text-sm">Last 30 Days</div>
+                <div className="stat-value text-warning text-2xl md:text-3xl">
                   {progressData.filter(d => d.completed).length}
                 </div>
               </div>
-              <div className="stat bg-base-200 rounded-lg p-4">
-                <div className="stat-title">Success Rate</div>
-                <div className="stat-value text-info">{completionRate}%</div>
+              <div className="stat bg-base-200 rounded-3xl p-3 md:p-4">
+                <div className="stat-title text-xs md:text-sm">Success Rate</div>
+                <div className="stat-value text-info text-2xl md:text-3xl">{completionRate}%</div>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Streak Badge Section */}
-        <div className="card bg-gradient-to-r from-primary to-secondary text-white shadow-xl">
-          <div className="card-body text-center">
-            <FaTrophy className="text-6xl mx-auto mb-4" />
-            <h3 className="text-3xl font-bold mb-2">
-              {habit.currentStreak === 0 && "Start Your Journey!"}
-              {habit.currentStreak > 0 && habit.currentStreak < 7 && "Building Momentum!"}
-              {habit.currentStreak >= 7 && habit.currentStreak < 30 && "On Fire! 🔥"}
-              {habit.currentStreak >= 30 && "Habit Master! 🏆"}
-            </h3>
-            <p className="text-xl">
-              {habit.currentStreak === 0 && "Begin your streak today!"}
-              {habit.currentStreak > 0 && habit.currentStreak < 7 && "Keep going, you're doing great!"}
-              {habit.currentStreak >= 7 && habit.currentStreak < 30 && "Consistency is key!"}
-              {habit.currentStreak >= 30 && "You've mastered this habit!"}
-            </p>
           </div>
         </div>
       </motion.div>

@@ -86,8 +86,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4 bg-gradient-to-br from-[#1085F1]/10 to-[#8129F1]/10">
-      <div className="card-bg w-full mx-auto max-w-md shrink-0 shadow-2xl rounded-2xl">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1085F1]/10 to-[#8129F1]/10 overflow-x-hidden" style={{ paddingTop: '48px', paddingBottom: '48px', paddingLeft: '12px', paddingRight: '12px' }}>
+      <div className="card-bg w-full shrink-0 shadow-2xl rounded-2xl" style={{ maxWidth: '448px', margin: '0 auto' }}>
         <div className="card-body p-8">
           <h1 className="text-4xl font-bold text-[#1085F1] mb-2 text-center">Sign Up</h1>
           <p className="text-gray-600 text-center mb-6">Create your account to start building habits</p>

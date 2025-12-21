@@ -112,12 +112,13 @@ const UpdateHabit = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4 bg-gradient-to-br from-[#1085F1]/10 to-[#8129F1]/10">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1085F1]/10 to-[#8129F1]/10 overflow-x-hidden" style={{ paddingTop: '48px', paddingBottom: '48px', paddingLeft: '12px', paddingRight: '12px' }}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-2xl"
+        className="w-full"
+        style={{ maxWidth: '672px' }}
       >
         <div className="card-bg shadow-2xl rounded-2xl">
           <div className="card-body p-8">

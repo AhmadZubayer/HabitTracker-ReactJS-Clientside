@@ -88,12 +88,13 @@ const MyHabits = () => {
   };
 
   return (
-    <div className="min-h-screen bg-base-200 py-12 px-4">
+    <div className="min-h-screen bg-base-200 overflow-x-hidden" style={{ paddingTop: '48px', paddingBottom: '48px', paddingLeft: '12px', paddingRight: '12px' }}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-7xl mx-auto"
+        className="w-full"
+        style={{ maxWidth: '1280px', margin: '0 auto' }}
       >
         <h2 className="text-4xl font-bold text-center mb-8">My Habits</h2>
 

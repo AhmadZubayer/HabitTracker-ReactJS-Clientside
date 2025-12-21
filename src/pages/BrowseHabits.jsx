@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { motion } from 'framer-motion';
-import { FaSearch, FaTrophy, FaEye } from 'react-icons/fa';
-import { MdOutlineTaskAlt } from 'react-icons/md';
+import { FaSearch } from 'react-icons/fa';
 import axios from 'axios';
+import HabitCard from '../components/HabitCard';
 
 const BrowseHabits = () => {
   const [habits, setHabits] = useState([]);
@@ -64,8 +64,8 @@ const BrowseHabits = () => {
   };
 
   return (
-    <div className="min-h-screen bg-base-200 py-12 px-4">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-base-200 overflow-x-hidden" style={{ paddingTop: '48px', paddingBottom: '48px', paddingLeft: '12px', paddingRight: '12px' }}>
+      <div className="w-full" style={{ maxWidth: '1280px', margin: '0 auto' }}>
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -77,42 +77,29 @@ const BrowseHabits = () => {
           </p>
 
           {/* Search and Filter Section */}
-          <div className="bg-base-100 p-6 rounded-xl shadow-lg mb-8">
-            <div className="flex flex-col md:flex-row gap-4">
-              {/* Search Bar */}
-              <div className="form-control flex-1">
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Search habits by title or keyword..."
-                    className="input input-bordered w-full rounded-xl pr-12"
-                    value={searchTerm}
-                    onChange={handleSearch}
-                  />
-                  <button className="btn btn-primary btn-circle absolute right-2 top-1/2 -translate-y-1/2">
-                    <FaSearch />
-                  </button>
-                </div>
-              </div>
-
-              {/* Category Filter */}
-              <div className="form-control md:w-48">
-                <select
-                  className="select select-bordered rounded-xl"
-                  value={selectedCategory || 'All'}
-                  onChange={(e) => handleCategoryChange(e.target.value)}
+          <div className="bg-base-100 shadow-lg mb-8" style={{ padding: '24px', borderRadius: '24px' }}>
+            {/* Search Bar */}
+            <div className="form-control mb-4">
+              <div className="flex gap-3 items-center">
+                <input
+                  type="text"
+                  placeholder="Search habits by title or keyword..."
+                  className="input input-bordered flex-1"
+                  style={{ borderRadius: '50px', paddingLeft: '20px', paddingRight: '20px', height: '48px' }}
+                  value={searchTerm}
+                  onChange={handleSearch}
+                />
+                <button 
+                  className="bg-primary hover:bg-primary-focus transition-colors rounded-full flex items-center justify-center"
+                  style={{ width: '48px', height: '48px', minWidth: '48px' }}
                 >
-                  {categories.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat}
-                    </option>
-                  ))}
-                </select>
+                  <FaSearch className="text-white" size={20} />
+                </button>
               </div>
             </div>
 
             {/* Category Badges */}
-            <div className="flex flex-wrap gap-2 mt-4">
+            <div className="flex flex-wrap gap-2">
               {categories.map((cat) => (
                 <button
                   key={cat}
@@ -129,91 +116,22 @@ const BrowseHabits = () => {
             </div>
           </div>
 
-          {/* Habits Table */}
+          {/* Habits Cards Grid */}
           {habits.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-xl text-gray-600">No habits found matching your criteria.</p>
             </div>
           ) : (
-            <div className="overflow-x-auto bg-base-100 rounded-3xl shadow-xl">
-              <table className="table table-zebra">
-                <thead>
-                  <tr>
-                    <th>Habit</th>
-                    <th>Category</th>
-                    <th>Streak</th>
-                    <th>Creator</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {habits.map((habit) => (
-                    <motion.tr
-                      key={habit._id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <td>
-                        <div className="flex items-center gap-3">
-                          <div className="avatar">
-                            <div className="mask mask-squircle h-12 w-12 bg-base-200 flex items-center justify-center">
-                              {habit.imageUrl ? (
-                                <img
-                                  src={habit.imageUrl}
-                                  alt={habit.title}
-                                />
-                              ) : (
-                                <MdOutlineTaskAlt className="text-primary text-2xl" />
-                              )}
-                            </div>
-                          </div>
-                          <div>
-                            <div className="font-bold">{habit.title}</div>
-                            <div className="text-sm opacity-50 line-clamp-1">{habit.description}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <span className="badge badge-primary badge-lg">{habit.category}</span>
-                      </td>
-                      <td>
-                        <div className="flex items-center gap-2">
-                          <FaTrophy className="text-warning text-xl" />
-                          <span className="font-bold text-lg">🔥 {habit.currentStreak}</span>
-                          <span className="text-sm text-gray-500">days</span>
-                        </div>
-                      </td>
-                      <td>
-                        <div className="flex items-center gap-2">
-                          <div className="avatar">
-                            <div className="w-8 rounded-full">
-                              <img
-                                src={habit.userPhotoURL || 'https://via.placeholder.com/40'}
-                                alt={habit.userName}
-                              />
-                            </div>
-                          </div>
-                          <div>
-                            <div className="font-semibold text-sm">{habit.userName}</div>
-                            <div className="text-xs text-gray-500">{habit.userEmail}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <Link 
-                          to={`/habit/${habit._id}`} 
-                          className="inline-flex items-center gap-2 p-2 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
-                          title="View Details"
-                        >
-                          <FaEye className="text-lg" />
-                        </Link>
-                      </td>
-                    </motion.tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            >
+              {habits.map((habit) => (
+                <HabitCard key={habit._id} habit={habit} variants={itemVariants} />
+              ))}
+            </motion.div>
           )}
 
           {/* Results Count */}
