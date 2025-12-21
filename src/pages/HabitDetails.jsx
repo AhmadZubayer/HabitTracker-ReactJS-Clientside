@@ -172,7 +172,7 @@ const HabitDetails = () => {
                   {isUserHabit && (
                     <div>
                       {completedToday ? (
-                        <div className="badge badge-success gap-2 px-3 py-2 md:px-6 md:py-4 text-xs md:text-base whitespace-nowrap">
+                        <div className="badge badge-success gap-2 px-3 py-2 md:px-6 md:py-4 text-xs md:text-base whitespace-nowrap rounded-full">
                           <FaCalendarCheck className="text-sm md:text-lg" />
                           <span>Completed for Today</span>
                         </div>
