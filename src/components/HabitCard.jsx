@@ -46,8 +46,7 @@ const HabitCard = ({ habit, variants }) => {
         {/* See Details Button */}
         <Link
           to={`/habit/${habit._id}`}
-          className="btn btn-sm btn-outline btn-primary w-full"
-          style={{ borderRadius: '8px' }}
+          className="btn-secondary w-full text-center flex items-center justify-center"
         >
           See Details
         </Link>

@@ -130,9 +130,9 @@ const HabitDetails = () => {
                       ) : (
                         <button
                           onClick={handleMarkComplete}
-                          className="btn btn-success btn-sm sm:btn-md md:btn-lg rounded-3xl px-4 sm:px-6 md:px-8 text-sm sm:text-base md:text-lg w-auto sm:w-auto"
+                          className="btn-primary flex items-center justify-center gap-2 w-auto"
                         >
-                          <FaCalendarCheck className="mr-1 sm:mr-2 text-base sm:text-lg md:text-xl" />
+                          <FaCalendarCheck className="text-lg" />
                           <span className="hidden sm:inline">Mark Complete</span>
                           <span className="sm:hidden">Complete</span>
                         </button>
