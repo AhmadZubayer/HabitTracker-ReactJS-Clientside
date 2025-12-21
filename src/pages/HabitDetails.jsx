@@ -4,7 +4,8 @@ import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
-import { FaTrophy, FaCalendarCheck, FaClock, FaUser } from 'react-icons/fa';
+import { FaTrophy, FaCalendarCheck, FaClock } from 'react-icons/fa';
+import { MdOutlineTaskAlt } from 'react-icons/md';
 import CompletedHabit from '../components/CompletedHabit';
 import CompletionModal from '../components/CompletionModal';
 
@@ -88,6 +89,7 @@ const HabitDetails = () => {
   }
 
   const isUserHabit = user && user.email === habit.userEmail;
+  const completedToday = habit.completionHistory?.includes(new Date().toISOString().split('T')[0]);
 
   return (
     <div className="min-h-screen bg-base-200 py-12 px-4">
@@ -95,62 +97,144 @@ const HabitDetails = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-5xl mx-auto"
+        className="max-w-6xl mx-auto"
       >
-        {/* Hero Section */}
-        <div className="card bg-base-100 shadow-xl mb-8">
-          <figure className="h-64 md:h-96 overflow-hidden">
-            <img
-              src={habit.imageUrl || 'https://via.placeholder.com/800x400'}
-              alt={habit.title}
-              className="w-full h-full object-cover"
-            />
-          </figure>
-          <div className="card-body">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
-              <h2 className="card-title text-3xl md:text-4xl">{habit.title}</h2>
-              <div className={`badge badge-lg ${getStreakBadgeColor(habit.currentStreak)}`}>
-                <FaTrophy className="mr-2" />
-                {habit.currentStreak} Day Streak
-              </div>
-            </div>
-
-            <div className="flex flex-wrap gap-2 mb-4">
-              <span className="badge badge-primary badge-lg">{habit.category}</span>
-              <span className="badge badge-outline badge-lg">
-                <FaClock className="mr-2" />
-                {habit.reminderTime}
-              </span>
-            </div>
-
-            <p className="text-lg mb-6">{habit.description}</p>
-
-            {/* Creator Info */}
-            <div className="flex items-center gap-4 mb-6 p-4 bg-base-200 rounded-lg">
-              <div className="avatar">
-                <div className="w-12 rounded-full">
-                  <img
-                    src={habit.userPhotoURL || 'https://via.placeholder.com/50'}
-                    alt={habit.userName}
-                  />
+        {/* Main Content Card */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          {/* Left Section - Habit Details */}
+          <div className="lg:col-span-2 card bg-base-100 shadow-xl">
+            <div className="card-body p-8">
+              {/* Habit Header - Icon and Title side by side */}
+              <div className="flex items-start gap-4 mb-6">
+                {/* Habit Icon */}
+                <div className="avatar flex-shrink-0">
+                  <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
+                    <MdOutlineTaskAlt className="text-primary text-3xl" />
+                  </div>
+                </div>
+                
+                {/* Title and Category */}
+                <div className="flex-1">
+                  <h2 className="text-3xl font-bold mb-2">{habit.title}</h2>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="badge badge-primary badge-lg">{habit.category}</span>
+                    <span className="badge badge-outline badge-lg">
+                      <FaClock className="mr-2" />
+                      {habit.reminderTime}
+                    </span>
+                  </div>
                 </div>
               </div>
-              <div>
-                <p className="font-semibold text-lg">{habit.userName}</p>
-                <p className="text-sm text-gray-600">{habit.userEmail}</p>
+
+              {/* Description */}
+              <div className="mb-6">
+                <h3 className="text-lg font-semibold text-gray-700 mb-2">Description</h3>
+                <p className="text-gray-600 leading-relaxed">{habit.description}</p>
+              </div>
+
+              {/* Creator Info */}
+              <div className="mb-6">
+                <h3 className="text-lg font-semibold text-gray-700 mb-3">Created by</h3>
+                <div className="flex items-center gap-4 p-4 bg-base-200 rounded-xl">
+                  <div className="avatar">
+                    <div className="w-12 rounded-full">
+                      <img
+                        src={habit.userPhotoURL || 'https://via.placeholder.com/50'}
+                        alt={habit.userName}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-lg">{habit.userName}</p>
+                    <p className="text-sm text-gray-600">{habit.userEmail}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Habit Image */}
+              {habit.imageUrl && (
+                <div className="mb-6">
+                  <h3 className="text-lg font-semibold text-gray-700 mb-3">Habit Image</h3>
+                  <div className="rounded-2xl overflow-hidden shadow-lg">
+                    <img
+                      src={habit.imageUrl}
+                      alt={habit.title}
+                      className="w-full h-auto object-cover"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Mark Complete Button or Completed Status */}
+              {isUserHabit && (
+                <div className="mt-6">
+                  {completedToday ? (
+                    <div className="alert alert-success">
+                      <FaCalendarCheck className="text-2xl" />
+                      <span className="text-lg font-semibold">Completed for Today! 🎉</span>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={handleMarkComplete}
+                      className="btn btn-success btn-lg w-full"
+                    >
+                      <FaCalendarCheck className="mr-2" />
+                      Mark Complete for Today
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Right Section - Streak Card */}
+          <div className="lg:col-span-1">
+            <div className="card bg-gray-100 shadow-xl rounded-3xl sticky top-4">
+              <div className="card-body p-6">
+                <h3 className="text-xl font-bold text-center mb-4">Current Streak</h3>
+                
+                {/* Streak Display */}
+                <div className="text-center mb-6">
+                  <div className="inline-flex items-center justify-center w-32 h-32 rounded-full bg-gradient-to-br from-orange-400 to-red-500 shadow-lg mb-4">
+                    <div className="text-center">
+                      <FaTrophy className="text-white text-4xl mb-2 mx-auto" />
+                      <p className="text-white text-4xl font-bold">{habit.currentStreak || 0}</p>
+                    </div>
+                  </div>
+                  <p className="text-gray-600 font-semibold text-lg">
+                    Day{habit.currentStreak !== 1 ? 's' : ''} 🔥
+                  </p>
+                </div>
+
+                {/* Streak Message */}
+                <div className="text-center mb-6">
+                  <h4 className="text-lg font-bold text-primary mb-2">
+                    {habit.currentStreak === 0 && "Start Your Journey!"}
+                    {habit.currentStreak > 0 && habit.currentStreak < 7 && "Building Momentum!"}
+                    {habit.currentStreak >= 7 && habit.currentStreak < 30 && "On Fire! 🔥"}
+                    {habit.currentStreak >= 30 && "Habit Master! 🏆"}
+                  </h4>
+                  <p className="text-gray-600 text-sm">
+                    {habit.currentStreak === 0 && "Begin your streak today!"}
+                    {habit.currentStreak > 0 && habit.currentStreak < 7 && "Keep going, you're doing great!"}
+                    {habit.currentStreak >= 7 && habit.currentStreak < 30 && "Consistency is key!"}
+                    {habit.currentStreak >= 30 && "You've mastered this habit!"}
+                  </p>
+                </div>
+
+                {/* Quick Stats */}
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center p-3 bg-white rounded-xl">
+                    <span className="text-gray-600 font-medium">Total Completions</span>
+                    <span className="text-primary font-bold text-lg">{habit.completionHistory?.length || 0}</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-white rounded-xl">
+                    <span className="text-gray-600 font-medium">Success Rate</span>
+                    <span className="text-success font-bold text-lg">{completionRate}%</span>
+                  </div>
+                </div>
               </div>
             </div>
-
-            {/* Mark Complete Button */}
-            {isUserHabit && (
-              <button
-                onClick={handleMarkComplete}
-                className="btn btn-success btn-lg w-full md:w-auto"
-              >
-                <FaCalendarCheck className="mr-2" />
-                Mark Complete for Today
-              </button>
-            )}
           </div>
         </div>
 
