@@ -105,7 +105,7 @@ const HabitDetails = () => {
           {/* Div 1 - Top Row (Habit Card + Current Streak Card) */}
           <div className="lg:col-span-2 grid grid-cols-1 lg:grid-cols-5" style={{ gap: '16px', marginBottom: '16px' }}>
             {/* Div 1.1 - Habit Card (3/5 = 60%) */}
-            <div className="lg:col-span-3 card shadow-xl rounded-3xl" style={{ backgroundColor: '#E3E3E3', height: '100%' }}>
+            <div className="lg:col-span-3 card bg-base-100 shadow-xl rounded-3xl" style={{ height: '100%' }}>
               <div className="card-body" style={{ padding: '24px' }}>
               {/* Habit Image and Info in horizontal layout */}
               <div className="flex flex-col sm:flex-row items-start" style={{ gap: '16px' }}>
@@ -146,13 +146,13 @@ const HabitDetails = () => {
 
                   {/* Description */}
                   <div style={{ marginBottom: '12px' }}>
-                    <h3 className="text-base font-semibold text-gray-700" style={{ marginBottom: '6px' }}>Description</h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">{habit.description}</p>
+                    <h3 className="text-base font-semibold" style={{ marginBottom: '6px' }}>Description</h3>
+                    <p className="text-gray-500 text-sm leading-relaxed">{habit.description}</p>
                   </div>
 
                   {/* Creator Info */}
                   <div style={{ marginBottom: '16px' }}>
-                    <h3 className="text-base font-semibold text-gray-700" style={{ marginBottom: '6px' }}>Created by</h3>
+                    <h3 className="text-base font-semibold" style={{ marginBottom: '6px' }}>Created by</h3>
                     <div className="flex items-center bg-base-200 rounded-3xl" style={{ gap: '12px', padding: '12px' }}>
                       <div className="avatar">
                         <div className="w-10 rounded-full">
@@ -193,7 +193,7 @@ const HabitDetails = () => {
           </div>
 
           {/* Div 1.2 - Current Streak Card (2/5 = 40%) */}
-          <div className="lg:col-span-2 card shadow-xl rounded-3xl" style={{ backgroundColor: '#C2E7FF', height: '100%' }}>
+          <div className="lg:col-span-2 card bg-info/20 shadow-xl rounded-3xl" style={{ height: '100%' }}>
             <div className="card-body flex flex-col justify-between" style={{ padding: '24px' }}>
               <div>
                 <h3 className="text-lg font-bold text-center mb-4">Current Streak</h3>
@@ -206,7 +206,7 @@ const HabitDetails = () => {
                       <p className="text-orange-500 text-3xl md:text-4xl font-bold">{habit.currentStreak || 0}</p>
                     </div>
                   </div>
-                  <p className="text-gray-600 font-semibold text-base">
+                  <p className="text-gray-500 font-semibold text-base">
                     Day{habit.currentStreak !== 1 ? 's' : ''} 🔥
                   </p>
                 </div>
@@ -214,12 +214,12 @@ const HabitDetails = () => {
 
               {/* Quick Stats */}
               <div className="grid grid-cols-2 gap-2">
-                <div className="flex flex-col items-center p-3 bg-white rounded-xl">
-                  <span className="text-gray-600 font-medium text-xs mb-1">Total Completions</span>
+                <div className="flex flex-col items-center p-3 bg-base-200 rounded-xl">
+                  <span className="text-gray-500 font-medium text-xs mb-1">Total Completions</span>
                   <span className="text-primary font-bold text-xl">{habit.completionHistory?.length || 0}</span>
                 </div>
-                <div className="flex flex-col items-center p-3 bg-white rounded-xl">
-                  <span className="text-gray-600 font-medium text-xs mb-1">Success Rate</span>
+                <div className="flex flex-col items-center p-3 bg-base-200 rounded-xl">
+                  <span className="text-gray-500 font-medium text-xs mb-1">Success Rate</span>
                   <span className="text-success font-bold text-xl">{completionRate}%</span>
                 </div>
               </div>
@@ -229,7 +229,7 @@ const HabitDetails = () => {
 
           {/* Div 2 - Bottom Row - 30 Days Streak Card (Full Width) */}
           <div className="lg:col-span-2 w-full">
-          <div className="card shadow-xl rounded-3xl" style={{ backgroundColor: '#C4EED0' }}>
+          <div className="card bg-success/20 shadow-xl rounded-3xl">
             <div className="card-body p-4 md:p-6">
               <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">30 Days Streak</h3>
               
@@ -239,12 +239,11 @@ const HabitDetails = () => {
                   <span className="font-semibold">Completion Rate</span>
                   <span className="font-bold" style={{ color: '#16a34a' }}>{completionRate}%</span>
                 </div>
-                <div className="w-full bg-white rounded-full h-4 overflow-hidden">
+                <div className="w-full bg-base-300 rounded-full h-4 overflow-hidden">
                   <div 
-                    className="h-full rounded-full transition-all duration-500"
+                    className="h-full bg-success rounded-full transition-all duration-500"
                     style={{ 
-                      width: `${completionRate}%`,
-                      backgroundColor: '#16a34a'
+                      width: `${completionRate}%`
                     }}
                   ></div>
                 </div>

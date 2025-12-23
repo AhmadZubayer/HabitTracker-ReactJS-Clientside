@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { motion } from 'framer-motion';
-import { FaTrophy, FaEye, FaStar } from 'react-icons/fa';
+import { FaTrophy, FaEye, FaChartLine } from 'react-icons/fa';
 import { MdOutlineTaskAlt } from 'react-icons/md';
 
 const HabitCard = ({ habit, variants }) => {
@@ -38,8 +38,8 @@ const HabitCard = ({ habit, variants }) => {
               {habit.title}
             </h3>
             <div className="flex items-center gap-1 text-sm">
+              <FaChartLine className="text-green-500 text-xs" />
               <span className="font-semibold">{habit.currentStreak || 0}</span>
-              <FaStar className="text-yellow-500 text-xs" />
             </div>
           </div>
         </div>

@@ -13,14 +13,14 @@ const Footer = () => {
               <span className="text-5xl mb-2">🎯</span>
               <h3 className="text-2xl font-bold">HabitTracker</h3>
             </div>
-            <p className="text-gray-600">
+            <p>
               Building better habits, one day at a time. Track, achieve, and maintain your daily goals with ease.
             </p>
           </div>
 
           <div className="text-center">
             <h4 className="text-xl font-semibold mb-4">Quick Links</h4>
-            <div className="flex items-center justify-center gap-3 text-gray-600">
+            <div className="flex items-center justify-center gap-3">
               <Link to="/about" className="hover:text-[#1085F1] transition">About</Link>
               <span>•</span>
               <Link to="/contact" className="hover:text-[#1085F1] transition">Contact</Link>
@@ -77,11 +77,11 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-300 mt-8 pt-6 text-center">
-          <p className="text-gray-600">© 2025 HabitTracker. All rights reserved.</p>
-          <p className="text-gray-600 mt-2">
+          <p>© 2025 HabitTracker. All rights reserved.</p>
+          <p className="mt-2">
             This is a project of Web Development course at Programming Hero.
           </p>
-          <div className="flex items-center justify-center gap-6 mt-3 text-gray-600">
+          <div className="flex items-center justify-center gap-6 mt-3">
             <a 
               href="https://github.com" 
               target="_blank" 

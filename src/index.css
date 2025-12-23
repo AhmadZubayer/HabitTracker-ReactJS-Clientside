@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @plugin "daisyui" {
-  themes: light --default;
+  themes: light, synthwave --default;
 }
 
 @plugin "daisyui/theme" {
@@ -9,9 +9,296 @@
   default: true;
   --color-primary: #1085F1;
   --color-secondary: #8129F1;
+  --color-base-100: #ffffff;
   --color-base-200: #f3f3f3;
   --color-base-300: #e7e7e7;
   --color-accent: #F16110;
+}
+
+@plugin "daisyui/theme" {
+  name: "synthwave";
+  --color-primary: #1085F1;
+  --color-secondary: #8129F1;
+  --color-base-100: #1a1a1a;
+  --color-base-200: #242424;
+  --color-base-300: #2e2e2e;
+  --color-accent: #F16110;
+}
+
+/* Dark mode specific styles */
+[data-theme="synthwave"] {
+  color-scheme: dark;
+}
+
+[data-theme="synthwave"] body {
+  background-color: #1a1a1a;
+  color: #e5e7eb;
+}
+
+/* Navbar dark mode with acrylic effect */
+[data-theme="synthwave"] .navbar {
+  background-color: rgba(36, 36, 36, 0.8) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Card backgrounds in dark mode */
+[data-theme="synthwave"] .card-bg,
+[data-theme="synthwave"] .bg-base-100 {
+  background-color: #242424 !important;
+}
+
+[data-theme="synthwave"] .bg-base-200 {
+  background-color: #1a1a1a !important;
+}
+
+/* Text colors for dark mode */
+[data-theme="synthwave"] .text-gray-600 {
+  color: #9ca3af;
+}
+
+[data-theme="synthwave"] .text-gray-500 {
+  color: #6b7280;
+}
+
+/* Input and form elements in dark mode */
+[data-theme="synthwave"] input,
+[data-theme="synthwave"] textarea,
+[data-theme="synthwave"] select {
+  background-color: #242424;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #e5e7eb;
+}
+
+[data-theme="synthwave"] input:focus,
+[data-theme="synthwave"] textarea:focus,
+[data-theme="synthwave"] select:focus {
+  border-color: #1085F1;
+  outline: none;
+}
+
+/* Dropdown menus in dark mode */
+[data-theme="synthwave"] .dropdown-content {
+  background-color: #242424 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Table in dark mode */
+[data-theme="synthwave"] .table {
+  color: #e5e7eb;
+}
+
+[data-theme="synthwave"] .table thead {
+  background-color: #242424;
+  color: #e5e7eb;
+}
+
+[data-theme="synthwave"] .table-zebra tbody tr:nth-child(even) {
+  background-color: rgba(36, 36, 36, 0.5);
+}
+
+/* Hover effects for dark mode */
+[data-theme="synthwave"] .hover\:bg-base-200:hover {
+  background-color: #2e2e2e !important;
+}
+
+/* Badge in dark mode */
+[data-theme="synthwave"] .badge {
+  background-color: #2e2e2e;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="synthwave"] .badge-primary {
+  background-color: #1085F1;
+  color: white;
+  border: none;
+}
+
+/* Shadow adjustments for dark mode */
+[data-theme="synthwave"] .shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="synthwave"] .shadow-2xl {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+/* Footer in dark mode */
+[data-theme="synthwave"] footer {
+  background-color: #242424 !important;
+}
+
+/* ========================================
+   DARK MODE TEXT COLORS - ORGANIZED
+   ======================================== */
+
+/* Base text colors */
+[data-theme="synthwave"] {
+  color: #e5e7eb;
+}
+
+[data-theme="synthwave"] .text-gray-800 {
+  color: #e5e7eb !important;
+}
+
+[data-theme="synthwave"] .text-gray-700 {
+  color: #d1d5db !important;
+}
+
+[data-theme="synthwave"] .text-gray-600 {
+  color: #9ca3af !important;
+}
+
+[data-theme="synthwave"] .text-gray-500 {
+  color: #6b7280 !important;
+}
+
+[data-theme="synthwave"] .text-gray-400 {
+  color: #9ca3af !important;
+}
+
+/* Footer specific text colors */
+[data-theme="synthwave"] footer h3,
+[data-theme="synthwave"] footer h4 {
+  color: #f9fafb !important;
+}
+
+[data-theme="synthwave"] footer p,
+[data-theme="synthwave"] footer a {
+  color: #9ca3af !important;
+}
+
+[data-theme="synthwave"] footer a:hover {
+  color: #1085F1 !important;
+}
+
+/* Border colors in dark mode */
+[data-theme="synthwave"] .border-gray-300 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="synthwave"] .border-gray-200 {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Heading colors */
+[data-theme="synthwave"] h1,
+[data-theme="synthwave"] h2,
+[data-theme="synthwave"] h3,
+[data-theme="synthwave"] h4,
+[data-theme="synthwave"] h5,
+[data-theme="synthwave"] h6 {
+  color: #f9fafb;
+}
+
+/* Link colors */
+[data-theme="synthwave"] a {
+  color: #d1d5db;
+}
+
+[data-theme="synthwave"] a:hover {
+  color: #1085F1;
+}
+
+/* Placeholder text in inputs */
+[data-theme="synthwave"] ::placeholder {
+  color: #6b7280;
+  opacity: 1;
+}
+
+/* Label text */
+[data-theme="synthwave"] label {
+  color: #d1d5db;
+}
+
+/* Specific text size + color combinations */
+[data-theme="synthwave"] .text-xl.text-gray-600,
+[data-theme="synthwave"] .text-lg.text-gray-600,
+[data-theme="synthwave"] .text-base.text-gray-600,
+[data-theme="synthwave"] .text-sm.text-gray-600 {
+  color: #9ca3af !important;
+}
+
+/* Description and subtitle text */
+[data-theme="synthwave"] p.text-gray-600,
+[data-theme="synthwave"] p.text-gray-700 {
+  color: #9ca3af !important;
+}
+
+/* Muted text */
+[data-theme="synthwave"] .opacity-50 {
+  opacity: 0.7;
+}
+
+/* Modal close button */
+[data-theme="synthwave"] .text-gray-400.hover\:text-gray-600:hover {
+  color: #d1d5db !important;
+}
+
+/* Calendar date numbers - make them more visible */
+[data-theme="synthwave"] .text-gray-500 {
+  color: #d1d5db !important;
+}
+
+[data-theme="synthwave"] .bg-base-300.text-gray-500 {
+  color: #9ca3af !important;
+}
+
+/* Button text - Sign In button */
+[data-theme="synthwave"] .btn-secondary {
+  color: #1a1a1a !important;
+}
+
+/* ========================================
+   END DARK MODE TEXT COLORS
+   ======================================== */
+
+/* Habit Details Page - Dark Mode */
+[data-theme="synthwave"] .stat {
+  background-color: #242424 !important;
+  color: #e5e7eb;
+}
+
+[data-theme="synthwave"] .stat-title {
+  color: #9ca3af;
+}
+
+[data-theme="synthwave"] .stat-value {
+  color: #e5e7eb;
+}
+
+/* Calendar grid completed days */
+[data-theme="synthwave"] .bg-success {
+  background-color: #10b981 !important;
+}
+
+/* Calendar grid missed days */
+[data-theme="synthwave"] .bg-base-300 {
+  background-color: #2e2e2e !important;
+}
+
+/* White backgrounds in habit details */
+[data-theme="synthwave"] .bg-white {
+  background-color: #242424 !important;
+}
+
+/* Progress bar background */
+[data-theme="synthwave"] .bg-white.rounded-full {
+  background-color: #2e2e2e !important;
+}
+
+/* Badge outline in dark mode */
+[data-theme="synthwave"] .badge-outline {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #e5e7eb;
+}
+
+/* Tooltip in dark mode */
+[data-theme="synthwave"] .tooltip:before {
+  background-color: #242424;
+  color: #e5e7eb;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 

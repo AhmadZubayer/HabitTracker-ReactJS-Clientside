@@ -4,7 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import { toast } from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import { motion } from 'framer-motion';
-import { FaEdit, FaTrash, FaCheckCircle, FaPlus, FaTrophy } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaCheckCircle, FaPlus, FaTrophy, FaChartLine } from 'react-icons/fa';
 import { MdOutlineTaskAlt } from 'react-icons/md';
 import axios from 'axios';
 import CompletedHabit, { isCompletedToday } from '../components/CompletedHabit';
@@ -154,8 +154,8 @@ const MyHabits = () => {
                     </td>
                     <td>
                       <div className="flex items-center gap-2">
-                        <FaTrophy className="text-warning text-xl" />
-                        <span className="font-bold text-lg">🔥 {habit.currentStreak}</span>
+                        <FaChartLine className="text-green-500 text-xl" />
+                        <span className="font-bold text-lg">{habit.currentStreak || 0}</span>
                         <span className="text-sm text-gray-500">days</span>
                       </div>
                     </td>
