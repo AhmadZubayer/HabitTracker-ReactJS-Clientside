@@ -4,10 +4,11 @@ import { AuthContext } from '../context/AuthContext';
 import { uploadImageToImageBB } from '../utils/imageUpload';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
-import axios from 'axios';
 import LoadingSpinner from '../components/LoadingSpinner';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const UpdateHabit = () => {
+  const axiosSecure = useAxiosSecure();
   const { user } = use(AuthContext);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const UpdateHabit = () => {
     if (id) {
       setPageLoading(true);
       console.log('Fetching habit with ID:', id);
-      axios.get(`http://localhost:3000/habits/${id}`)
+      axiosSecure.get(`/habits/${id}`)
         .then(res => {
           console.log('Habit loaded:', res.data);
           setHabit(res.data);
@@ -38,7 +39,7 @@ const UpdateHabit = () => {
           setPageLoading(false);
         });
     }
-  }, [id]);
+  }, [id, axiosSecure, navigate]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -53,7 +54,7 @@ const UpdateHabit = () => {
   };
 
   const updateHabitDetails = (formData) => {
-    axios.put(`http://localhost:3000/habits/${id}`, formData)
+    axiosSecure.put(`/habits/${id}`, formData)
       .then(res => {
         console.log(res.data);
         toast.success('Habit updated successfully!');

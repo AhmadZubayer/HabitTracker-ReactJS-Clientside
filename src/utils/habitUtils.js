@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 import { toast } from 'react-hot-toast';
 
 /**
@@ -55,7 +55,7 @@ export const completeHabit = async (habitId, habit, onSuccess, onError) => {
       currentStreak: newStreak
     };
     
-    const response = await axios.put(`http://localhost:3000/habits/${habitId}`, updatedData);
+    const response = await axiosInstance.put(`/habits/${habitId}`, updatedData);
     
     if (response.data) {
       toast.success('Habit marked as complete! 🎉');

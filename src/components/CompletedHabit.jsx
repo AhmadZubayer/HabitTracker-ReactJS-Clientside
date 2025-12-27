@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import axiosInstance from '../utils/axiosInstance';
 import { toast } from 'react-hot-toast';
 
 /**
@@ -62,7 +62,7 @@ const CompletedHabit = {
       };
 
       // Call backend API to mark as complete
-      const response = await axios.post(`http://localhost:3000/habits/${habitId}/complete`, payload);
+      const response = await axiosInstance.post(`/habits/${habitId}/complete`, payload);
       
       if (response.data) {
         toast.success('Habit marked as complete! 🎉');

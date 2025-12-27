@@ -4,9 +4,10 @@ import { AuthContext } from '../context/AuthContext';
 import { uploadImageToImageBB } from '../utils/imageUpload';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
-import axios from 'axios';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const AddHabit = () => {
+  const axiosSecure = useAxiosSecure();
   const { user } = use(AuthContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -60,7 +61,7 @@ const AddHabit = () => {
       };
 
       // Send to backend
-      axios.post('http://localhost:3000/habits', formData)
+      axiosSecure.post('/habits', formData)
         .then(res => {
           console.log(res);
           toast.success('Habit created successfully!');

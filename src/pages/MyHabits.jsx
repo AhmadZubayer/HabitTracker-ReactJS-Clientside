@@ -6,12 +6,13 @@ import Swal from 'sweetalert2';
 import { motion } from 'framer-motion';
 import { FaEdit, FaTrash, FaCheckCircle, FaPlus, FaTrophy, FaChartLine } from 'react-icons/fa';
 import { MdOutlineTaskAlt } from 'react-icons/md';
-import axios from 'axios';
 import CompletedHabit, { isCompletedToday } from '../components/CompletedHabit';
 import CompletionModal from '../components/CompletionModal';
 import LoadingSpinner from '../components/LoadingSpinner';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const MyHabits = () => {
+  const axiosSecure = useAxiosSecure();
   const { user } = use(AuthContext);
   const navigate = useNavigate();
   const [habits, setHabits] = useState([]);
@@ -22,7 +23,7 @@ const MyHabits = () => {
   const loadHabits = () => {
     if (user?.email) {
       setLoading(true);
-      axios.get(`http://localhost:3000/habits/user/${user.email}`)
+      axiosSecure.get(`/habits/user/${user.email}`)
         .then(res => {
           setHabits(res.data);
         })
@@ -51,7 +52,7 @@ const MyHabits = () => {
       confirmButtonText: 'Yes, delete :('
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:3000/habits/${id}`)
+        axiosSecure.delete(`/habits/${id}`)
           .then(() => {
             loadHabits();
             toast.success('Habit deleted successfully');

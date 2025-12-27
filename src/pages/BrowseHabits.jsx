@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { motion } from 'framer-motion';
 import { FaSearch } from 'react-icons/fa';
-import axios from 'axios';
 import HabitCard from '../components/HabitCard';
 import LoadingSpinner from '../components/LoadingSpinner';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const BrowseHabits = () => {
+  const axiosSecure = useAxiosSecure();
   const [habits, setHabits] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -16,7 +17,7 @@ const BrowseHabits = () => {
 
   const loadHabits = React.useCallback(() => {
     setLoading(true);
-    let url = 'http://localhost:3000/habits/public';
+    let url = '/habits/public';
     const params = new URLSearchParams();
     
     if (searchTerm) params.append('search', searchTerm);
@@ -26,7 +27,7 @@ const BrowseHabits = () => {
       url += `?${params.toString()}`;
     }
     
-    axios.get(url)
+    axiosSecure.get(url)
       .then(res => {
         setHabits(res.data);
       })
@@ -36,7 +37,7 @@ const BrowseHabits = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, axiosSecure]);
 
   useEffect(() => {
     loadHabits();

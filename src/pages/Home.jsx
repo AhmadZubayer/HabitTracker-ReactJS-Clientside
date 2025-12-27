@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import Banner from '../components/Banner';
 import HabitCard from '../components/HabitCard';
 import LoadingSpinner from '../components/LoadingSpinner';
-import axios from 'axios';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 import { 
   FaBullseye, 
   FaChartLine, 
@@ -20,12 +20,13 @@ import {
 import { MdOutlineTaskAlt } from 'react-icons/md';
 
 const Home = () => {
+  const axiosSecure = useAxiosSecure();
   const [featuredHabits, setFeaturedHabits] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Fetch 4 newest public habits
-    axios.get('http://localhost:3000/habits/public?limit=4')
+    axiosSecure.get('/habits/public?limit=4')
       .then(res => {
         setFeaturedHabits(res.data);
       })
@@ -35,7 +36,7 @@ const Home = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [axiosSecure]);
 
   const containerVariants = {
     hidden: { opacity: 0 },

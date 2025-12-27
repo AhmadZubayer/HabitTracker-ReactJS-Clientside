@@ -1,7 +1,6 @@
 import React, { use, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { AuthContext } from '../context/AuthContext';
-import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import { FaTrophy, FaCalendarCheck, FaClock } from 'react-icons/fa';
@@ -9,8 +8,10 @@ import { MdOutlineTaskAlt } from 'react-icons/md';
 import CompletedHabit from '../components/CompletedHabit';
 import CompletionModal from '../components/CompletionModal';
 import LoadingSpinner from '../components/LoadingSpinner';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const HabitDetails = () => {
+  const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const { user } = use(AuthContext);
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const HabitDetails = () => {
   const loadHabit = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3000/habits/${id}`);
+      const response = await axiosSecure.get(`/habits/${id}`);
       const habitState = response.data;
       setHabit(habitState);
       
