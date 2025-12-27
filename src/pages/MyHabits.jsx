@@ -223,7 +223,6 @@ const MyHabits = () => {
         )}
       </motion.div>
 
-      {/* Completion Modal */}
       <CompletionModal
         isOpen={showCompletionModal}
         onClose={() => setShowCompletionModal(false)}

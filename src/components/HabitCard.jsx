@@ -13,7 +13,6 @@ const HabitCard = ({ habit, variants }) => {
       className="card bg-base-100 shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 group"
       style={{ borderRadius: '20px' }}
     >
-      {/* Habit Image/Banner */}
       <figure className="h-44 bg-gradient-to-br from-blue-500 to-blue-600 relative overflow-hidden">
         {imageLoading && (
           <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600">
@@ -27,7 +26,6 @@ const HabitCard = ({ habit, variants }) => {
           onLoad={() => setImageLoading(false)}
           style={{ display: imageLoading ? 'none' : 'block' }}
         />
-        {/* Hover Description Overlay */}
         <div className="absolute inset-0 flex items-center justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <p className="text-white text-sm text-center line-clamp-6">
             {habit.description}
@@ -35,9 +33,7 @@ const HabitCard = ({ habit, variants }) => {
         </div>
       </figure>
 
-      {/* Card Body */}
       <div style={{ padding: '16px' }}>
-        {/* Habit Icon and Title */}
         <div className="flex items-start gap-3 mb-3">
           <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
             <MdOutlineTaskAlt className="text-blue-600 text-2xl" />

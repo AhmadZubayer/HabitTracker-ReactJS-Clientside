@@ -113,16 +113,11 @@ const HabitDetails = () => {
         className="w-full"
         style={{ maxWidth: '1152px', margin: '0 auto' }}
       >
-        {/* Main Grid Container */}
         <div className="grid grid-cols-1 lg:grid-cols-2 w-full" style={{ gap: '16px' }}>
-          {/* Div 1 - Top Row (Habit Card + Current Streak Card) */}
           <div className="lg:col-span-2 grid grid-cols-1 lg:grid-cols-5" style={{ gap: '16px', marginBottom: '16px' }}>
-            {/* Div 1.1 - Habit Card (3/5 = 60%) */}
             <div className="lg:col-span-3 card bg-base-100 shadow-xl rounded-3xl" style={{ height: '100%' }}>
               <div className="card-body" style={{ padding: '24px' }}>
-              {/* Habit Image and Info in horizontal layout */}
               <div className="flex flex-col sm:flex-row items-start" style={{ gap: '16px' }}>
-                {/* Habit Image */}
                 <div className="w-full sm:w-48 flex-shrink-0">
                   <div className="rounded-3xl overflow-hidden shadow-lg relative" style={{ height: '200px' }}>
                     {imageLoading && (
@@ -140,17 +135,14 @@ const HabitDetails = () => {
                   </div>
                 </div>
 
-                {/* Icon, Habit Name and Details */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start" style={{ gap: '12px', marginBottom: '12px' }}>
-                    {/* Habit Icon */}
                     <div className="avatar flex-shrink-0">
                       <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-primary/10 flex items-center justify-center">
                         <MdOutlineTaskAlt className="text-primary text-2xl md:text-3xl" />
                       </div>
                     </div>
                     
-                    {/* Habit Name */}
                     <div className="flex-1">
                       <h2 className="text-2xl md:text-3xl font-bold break-words mb-2">{habit.title}</h2>
                       <div className="flex flex-wrap gap-2">
@@ -163,13 +155,11 @@ const HabitDetails = () => {
                     </div>
                   </div>
 
-                  {/* Description */}
                   <div style={{ marginBottom: '12px' }}>
                     <h3 className="text-base font-semibold" style={{ marginBottom: '6px' }}>Description</h3>
                     <p className="text-gray-500 text-sm leading-relaxed">{habit.description}</p>
                   </div>
 
-                  {/* Creator Info */}
                   <div style={{ marginBottom: '16px' }}>
                     <h3 className="text-base font-semibold" style={{ marginBottom: '6px' }}>Created by</h3>
                     <div className="flex items-center bg-base-200 rounded-3xl" style={{ gap: '12px', padding: '12px' }}>
@@ -187,11 +177,10 @@ const HabitDetails = () => {
                     </div>
                   </div>
 
-                  {/* Mark Complete Button or Completed Status - At Bottom */}
                   {isUserHabit && (
                     <div>
                       {completedToday ? (
-                        <div className="badge badge-success gap-2 px-3 py-2 md:px-6 md:py-4 text-xs md:text-base whitespace-nowrap rounded-full">
+                        <div className="badge badge-success gap-2 px-3 py-2 md:px-6 md:py-4 text-xs md:text-base whitespace-nowrap rounded-full text-white">
                           <FaCalendarCheck className="text-sm md:text-lg" />
                           <span>Completed for Today</span>
                         </div>
@@ -211,13 +200,11 @@ const HabitDetails = () => {
             </div>
           </div>
 
-          {/* Div 1.2 - Current Streak Card (2/5 = 40%) */}
           <div className="lg:col-span-2 card bg-info/20 shadow-xl rounded-3xl" style={{ height: '100%' }}>
             <div className="card-body flex flex-col justify-between" style={{ padding: '24px' }}>
               <div>
                 <h3 className="text-lg font-bold text-center mb-4">Current Streak</h3>
                 
-                {/* Streak Display */}
                 <div className="text-center mb-6">
                   <div className="inline-flex items-center justify-center w-28 h-28 md:w-32 md:h-32 rounded-full border-8 border-orange-500 bg-transparent shadow-lg mb-3">
                     <div className="text-center">
@@ -231,7 +218,6 @@ const HabitDetails = () => {
                 </div>
               </div>
 
-              {/* Quick Stats */}
               <div className="grid grid-cols-2 gap-2">
                 <div className="flex flex-col items-center p-3 bg-base-200 rounded-xl">
                   <span className="text-gray-500 font-medium text-xs mb-1">Total Completions</span>
@@ -246,13 +232,11 @@ const HabitDetails = () => {
           </div>
           </div>
 
-          {/* Div 2 - Bottom Row - 30 Days Streak Card (Full Width) */}
           <div className="lg:col-span-2 w-full">
           <div className="card bg-success/20 shadow-xl rounded-3xl">
             <div className="card-body p-4 md:p-6">
               <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">30 Days Streak</h3>
               
-              {/* Progress Bar */}
               <div className="mb-6">
                 <div className="flex justify-between mb-2">
                   <span className="font-semibold">Completion Rate</span>
@@ -268,7 +252,6 @@ const HabitDetails = () => {
                 </div>
               </div>
 
-              {/* Calendar Grid */}
               <div className="grid grid-cols-7 sm:grid-cols-10 lg:grid-cols-15 gap-2 sm:gap-3">
                 {progressData.map((day, index) => (
                   <div
@@ -289,7 +272,6 @@ const HabitDetails = () => {
                 ))}
               </div>
 
-              {/* Stats */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-6 md:mt-8">
                 <div className="stat bg-base-200 rounded-3xl p-3 md:p-4">
                   <div className="stat-title text-xs md:text-sm">Total Completions</div>
@@ -316,7 +298,6 @@ const HabitDetails = () => {
         </div>
       </motion.div>
 
-      {/* Completion Modal */}
       <CompletionModal
         isOpen={showCompletionModal}
         onClose={() => setShowCompletionModal(false)}

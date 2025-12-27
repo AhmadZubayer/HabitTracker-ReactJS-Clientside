@@ -42,12 +42,12 @@ const AddHabit = () => {
     try {
       let imageUrl = '';
       
-      // Upload image if provided
+      
       if (imageFile) {
         imageUrl = await uploadImageToImageBB(imageFile);
       }
 
-      // Create habit object
+      
       const formData = {
         title,
         description,
@@ -60,7 +60,7 @@ const AddHabit = () => {
         isPublic
       };
 
-      // Send to backend
+     
       axiosSecure.post('/habits', formData)
         .then(res => {
           console.log(res);
@@ -97,7 +97,7 @@ const AddHabit = () => {
             <p className="text-gray-600 text-center mb-8">Start building a better habit today</p>
             
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Habit Title */}
+            
               <div>
                 <label className="label font-semibold text-gray-700">
                   <span className="label-text">Habit Title *</span>
@@ -111,7 +111,7 @@ const AddHabit = () => {
                 />
               </div>
 
-              {/* Description */}
+          
               <div>
                 <label className="label font-semibold text-gray-700">
                   <span className="label-text">Description *</span>
@@ -124,7 +124,7 @@ const AddHabit = () => {
                 ></textarea>
               </div>
 
-              {/* Category */}
+          
               <div>
                 <label className="label font-semibold text-gray-700">
                   <span className="label-text">Category *</span>
@@ -139,7 +139,7 @@ const AddHabit = () => {
                 </select>
               </div>
 
-              {/* Reminder Time */}
+         
               <div>
                 <label className="label font-semibold text-gray-700">
                   <span className="label-text">Reminder Time *</span>
@@ -152,7 +152,6 @@ const AddHabit = () => {
                 />
               </div>
 
-              {/* Image Upload */}
               <div>
                 <label className="label font-semibold text-gray-700">
                   <span className="label-text">Habit Image (Optional)</span>
@@ -174,7 +173,7 @@ const AddHabit = () => {
                 )}
               </div>
 
-              {/* User Name (Read-only) */}
+          
               <div>
                 <label className="label font-semibold text-gray-700">
                   <span className="label-text">Your Name</span>
@@ -188,7 +187,7 @@ const AddHabit = () => {
                 />
               </div>
 
-              {/* User Email (Read-only) */}
+         
               <div>
                 <label className="label font-semibold text-gray-700">
                   <span className="label-text">Your Email</span>
@@ -202,8 +201,8 @@ const AddHabit = () => {
                 />
               </div>
 
-              {/* Public/Private Toggle */}
-              <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
+         
+              <div className="flex items-center gap-3 py-4">
                 <input
                   type="checkbox"
                   name="isPublic"
@@ -211,12 +210,12 @@ const AddHabit = () => {
                   defaultChecked
                   id="isPublic"
                 />
-                <label htmlFor="isPublic" className="font-semibold text-gray-700 cursor-pointer">
+                <label htmlFor="isPublic" className="text-lg font-semibold cursor-pointer">
                   Make this habit public (visible to others)
                 </label>
               </div>
 
-              {/* Submit Button */}
+          
               <div className="mt-8">
                 <button
                   type="submit"

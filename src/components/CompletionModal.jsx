@@ -31,7 +31,6 @@ const CompletionModal = ({ isOpen, onClose, streak, habitTitle }) => {
             className="relative bg-white rounded-3xl w-80 h-80 flex flex-col items-center justify-center shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button */}
             <button
               onClick={onClose}
               className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors"
@@ -39,21 +38,18 @@ const CompletionModal = ({ isOpen, onClose, streak, habitTitle }) => {
               <FaTimes className="text-xl" />
             </button>
 
-            {/* Animated Checkmark Circle */}
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 15 }}
               className="relative mb-4"
             >
-              {/* Outer Circle */}
               <motion.div
                 initial={{ rotate: 0 }}
                 animate={{ rotate: 360 }}
                 transition={{ duration: 1, ease: "easeInOut" }}
                 className="w-24 h-24 rounded-full border-4 border-green-500 flex items-center justify-center"
               >
-                {/* Inner Circle with Checkmark */}
                 <motion.svg
                   initial={{ pathLength: 0 }}
                   animate={{ pathLength: 1 }}
@@ -75,7 +71,6 @@ const CompletionModal = ({ isOpen, onClose, streak, habitTitle }) => {
                 </motion.svg>
               </motion.div>
 
-              {/* Pulsing rings */}
               <motion.div
                 initial={{ scale: 1, opacity: 0.5 }}
                 animate={{ scale: [1, 1.5, 2], opacity: [0.5, 0.3, 0] }}
@@ -84,7 +79,6 @@ const CompletionModal = ({ isOpen, onClose, streak, habitTitle }) => {
               />
             </motion.div>
 
-            {/* Congratulations Text */}
             <motion.h3
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -94,7 +88,6 @@ const CompletionModal = ({ isOpen, onClose, streak, habitTitle }) => {
               Congratulations! 🎉
             </motion.h3>
 
-            {/* Habit Title */}
             {habitTitle && (
               <motion.p
                 initial={{ y: 20, opacity: 0 }}
@@ -106,7 +99,6 @@ const CompletionModal = ({ isOpen, onClose, streak, habitTitle }) => {
               </motion.p>
             )}
 
-            {/* Streak Count */}
             <motion.div
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}

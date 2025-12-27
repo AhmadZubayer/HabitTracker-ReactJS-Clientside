@@ -95,7 +95,7 @@ const NavBar = () => {
           </ul>
         </div>
         <Link to="/" className="btn btn-ghost text-xl flex items-center gap-2">
-          <span className="text-2xl">🎯</span>
+          <img src="/mainlogo.png" alt="HabitTracker Logo" className="w-10 h-10" />
           <span>HabitTracker</span>
         </Link>
       </div>
@@ -173,11 +173,18 @@ const NavBar = () => {
                 />
               </div>
             </div>
-            <ul tabIndex={0} className="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-56 p-4 shadow card-bg">
-              <li className="px-4 py-3">
-                <span className="font-semibold text-lg">{user.displayName || 'User'}</span>
+            <ul tabIndex={0} className="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-64 p-4 shadow card-bg">
+              <li className="mb-2">
+                <div className="text-center px-2 py-2 hover:bg-transparent cursor-default">
+                  <span className="font-semibold text-base block truncate">{user.displayName || 'User'}</span>
+                </div>
               </li>
-              <li className="px-2 py-2">
+              <li className="mb-3">
+                <div className="text-center px-2 py-1 hover:bg-transparent cursor-default">
+                  <span className="text-sm text-gray-600 block truncate">{user.email}</span>
+                </div>
+              </li>
+              <li>
                 <button onClick={handleSignOut} className="btn-red w-full text-center flex items-center justify-center">Sign Out</button>
               </li>
             </ul>

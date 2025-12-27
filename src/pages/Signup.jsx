@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react';
+import React, { use, useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router';
 import { AuthContext } from '../context/AuthContext';
 import { updateProfile } from 'firebase/auth';
@@ -7,11 +7,17 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Signup = () => {
-  const { createUser, signInWithGoogle, updateUserProfile } = use(AuthContext);
+  const { createUser, signInWithGoogle, updateUserProfile, user } = use(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/my-habits');
+    }
+  }, [user, navigate]);
 
   const validatePassword = (password) => {
     const minLength = password.length >= 6;

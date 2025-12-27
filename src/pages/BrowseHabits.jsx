@@ -83,9 +83,7 @@ const BrowseHabits = () => {
             Discover and get inspired by habits from our community
           </p>
 
-          {/* Search and Filter Section */}
           <div className="bg-base-100 shadow-lg mb-8" style={{ padding: '24px', borderRadius: '24px' }}>
-            {/* Search Bar */}
             <div className="form-control mb-4">
               <div className="flex gap-3 items-center">
                 <input
@@ -105,7 +103,6 @@ const BrowseHabits = () => {
               </div>
             </div>
 
-            {/* Category Badges */}
             <div className="flex flex-wrap gap-2">
               {categories.map((cat) => (
                 <button
@@ -123,7 +120,6 @@ const BrowseHabits = () => {
             </div>
           </div>
 
-          {/* Habits Cards Grid */}
           {loading ? (
             <div className="min-h-[400px] flex items-center justify-center">
               <LoadingSpinner size="lg" />
@@ -145,7 +141,6 @@ const BrowseHabits = () => {
             </motion.div>
           )}
 
-          {/* Results Count */}
           <div className="text-center mt-8">
             <p className="text-lg text-gray-600">
               Showing <span className="font-bold">{habits.length}</span> habit{habits.length !== 1 ? 's' : ''}

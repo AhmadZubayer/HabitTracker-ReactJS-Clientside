@@ -47,12 +47,12 @@ const Router = createBrowserRouter([
       {
         path: "/habit/:id",
         element: <PrivateRoute><HabitDetails /></PrivateRoute>
-      },
-      {
-        path: "*",
-        Component: NotFound
       }
     ]
+  },
+  {
+    path: "*",
+    Component: NotFound
   }
 ]);
 

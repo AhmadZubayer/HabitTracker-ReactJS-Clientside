@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           <div>
             <div className="flex flex-col items-start mb-4">
-              <span className="text-5xl mb-2">🎯</span>
+              <img src="/mainlogo.png" alt="HabitTracker Logo" className="w-20 h-20 mb-2" />
               <h3 className="text-2xl font-bold">HabitTracker</h3>
             </div>
             <p>

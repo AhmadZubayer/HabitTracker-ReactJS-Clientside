@@ -59,10 +59,8 @@ const Home = () => {
 
   return (
     <div className="overflow-x-hidden">
-      {/* Hero Banner Section with Swiper */}
       <Banner />
 
-      {/* Featured Habits Section */}
       <section className="bg-base-100" style={{ paddingTop: '80px', paddingBottom: '80px' }}>
         <div className="w-full" style={{ maxWidth: '1280px', margin: '0 auto', paddingLeft: '12px', paddingRight: '12px' }}>
           <motion.div
@@ -104,7 +102,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Why Build Habits Section */}
       <section className="py-20 bg-base-200">
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
@@ -159,7 +156,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Success Stories Section */}
       <section className="py-20 bg-base-100">
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
@@ -196,7 +192,7 @@ const Home = () => {
                 It changed my life completely."
               </p>
               <div className="mt-4">
-                <span className="badge badge-success">180-day streak</span>
+                <span className="badge badge-success text-white">180-day streak</span>
               </div>
             </motion.div>
 
@@ -217,7 +213,7 @@ const Home = () => {
                 Now I've read 52 books in a year!"
               </p>
               <div className="mt-4">
-                <span className="badge badge-success">365-day streak</span>
+                <span className="badge badge-success text-white">365-day streak</span>
               </div>
             </motion.div>
 
@@ -238,14 +234,13 @@ const Home = () => {
                 that improved my productivity tremendously."
               </p>
               <div className="mt-4">
-                <span className="badge badge-success">120-day streak</span>
+                <span className="badge badge-success text-white">120-day streak</span>
               </div>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* How It Works Section */}
       <section className="py-20 bg-base-200">
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
@@ -265,37 +260,61 @@ const Home = () => {
             viewport={{ once: true }}
             className="grid grid-cols-1 md:grid-cols-3 gap-8"
           >
-            <motion.div variants={itemVariants} className="card bg-base-100 shadow-lg rounded-3xl p-8 text-center">
-              <div className="bg-primary text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                1
+            <motion.div variants={itemVariants} className="card bg-base-100 shadow-xl rounded-3xl overflow-hidden">
+              <div className="relative h-64 overflow-hidden">
+                <div className="absolute top-4 left-4 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-lg z-10">
+                  1
+                </div>
+                <img 
+                  src="/home-imgs/createHabit.png" 
+                  alt="Create Your Habit" 
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                />
               </div>
-              <FaCheckCircle className="text-5xl text-primary mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-3">Create Your Habit</h3>
-              <p className="text-gray-600">
-                Define what habit you want to build, set a category, and choose a reminder time
-              </p>
+              <div className="p-6 text-center">
+                <h3 className="text-xl font-bold mb-3">Create Your Habit</h3>
+                <p className="text-gray-600">
+                  Define what habit you want to build, set a category, and choose a reminder time
+                </p>
+              </div>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="card bg-base-100 shadow-lg rounded-3xl p-8 text-center">
-              <div className="bg-secondary text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                2
+            <motion.div variants={itemVariants} className="card bg-base-100 shadow-xl rounded-3xl overflow-hidden">
+              <div className="relative h-64 overflow-hidden">
+                <div className="absolute top-4 left-4 bg-secondary text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-lg z-10">
+                  2
+                </div>
+                <img 
+                  src="/home-imgs/completeDaily.png" 
+                  alt="Track Daily" 
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                />
               </div>
-              <FaClock className="text-5xl text-secondary mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-3">Track Daily</h3>
-              <p className="text-gray-600">
-                Mark your habit complete each day and watch your streak grow
-              </p>
+              <div className="p-6 text-center">
+                <h3 className="text-xl font-bold mb-3">Track Daily</h3>
+                <p className="text-gray-600">
+                  Mark your habit complete each day and watch your streak grow
+                </p>
+              </div>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="card bg-base-100 shadow-lg rounded-3xl p-8 text-center">
-              <div className="bg-accent text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                3
+            <motion.div variants={itemVariants} className="card bg-base-100 shadow-xl rounded-3xl overflow-hidden">
+              <div className="relative h-64 overflow-hidden">
+                <div className="absolute top-4 left-4 bg-accent text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-lg z-10">
+                  3
+                </div>
+                <img 
+                  src="/home-imgs/viewStreak.png" 
+                  alt="Build Consistency" 
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                />
               </div>
-              <FaBrain className="text-5xl text-accent mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-3">Build Consistency</h3>
-              <p className="text-gray-600">
-                See your progress, celebrate milestones, and make habits stick
-              </p>
+              <div className="p-6 text-center">
+                <h3 className="text-xl font-bold mb-3">Build Consistency</h3>
+                <p className="text-gray-600">
+                  See your progress, celebrate milestones, and make habits stick
+                </p>
+              </div>
             </motion.div>
           </motion.div>
 
