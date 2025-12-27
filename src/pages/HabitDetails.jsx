@@ -64,14 +64,12 @@ const HabitDetails = () => {
     if (!habit) return;
     
     CompletedHabit.markComplete(id, habit, (data) => {
-      // Show completion modal with streak data
       setCompletionData({
         streak: data.currentStreak || 1,
         habitTitle: habit.title
       });
       setShowCompletionModal(true);
       
-      // Reload habit after successful completion
       loadHabit();
     }, null, axiosSecure);
   };

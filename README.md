@@ -1,123 +1,72 @@
-# 🎯 Habit Tracker - Client Side
+# 🎯 Habit Tracker - Build Better Habits, One Day at a Time
 
-A modern, feature-rich habit tracking application built with React + Vite, Firebase Authentication, and Framer Motion animations.
+**LIVE LINK:** [https://habirtracker-mern.web.app](https://habirtracker-mern.web.app)
 
-## ✨ Features
+Habit Tracker is a modern, feature-rich web application built for individuals who want to build and maintain positive daily habits through consistent tracking and motivation.
 
-### 🔐 Authentication
-- Email/Password registration and login
-- Google authentication
-- Password validation (min 6 chars, 1 uppercase, 1 lowercase)
-- Persistent login sessions
-- Protected routes
+## Features
 
-### 🏠 Home Page
-- Hero banner with typewriter effect
-- Featured habits section (6 newest public habits)
-- "Why Build Habits" benefits section
-- Success stories testimonial section
-- "How It Works" guide section
-- Fully animated with Framer Motion
+**Authentication:** Secure Firebase authentication with Email/Password and Google Sign-In  
+**Habit Management:** Create, update, and delete personal habits with images  
+**Streak Tracking:** Automatic calculation of consecutive completion days  
+**Private Routes:** Protected habit details and profile pages  
+**Public Habits:** Browse and discover habits shared by the community  
+**30-Day Progress:** Visual calendar showing completion history  
+**Responsive Design:** Mobile-friendly interface using Tailwind CSS and DaisyUI  
 
-### ✍️ Habit Management
-- **Add Habit**: Create new habits with title, description, category, reminder time, and optional image upload (ImageBB)
-- **My Habits**: View all your habits in a table with:
-  - Current streak tracking
-  - Mark complete (once per day)
-  - Update habit details
-  - Delete habits (with confirmation)
-- **Browse Public Habits**: Search and filter public habits by title/keyword and category
-- **Habit Details**: View detailed habit information with:
-  - 30-day progress calendar
-  - Completion rate progress bar
-  - Streak badges and stats
-  - Creator information
+## Stack Used
 
-### 📊 Streak Tracking
-- Automatic calculation of consecutive completion days
-- Visual progress indicators
-- Streak badges with color-coded levels
-- Prevents duplicate same-day completions
+**Frontend:**
+- React 19
+- React Router 7
+- Firebase Authentication
+- Tailwind CSS 4
+- DaisyUI
+- Framer Motion
+- React Hot Toast
+- Vite
 
-### 🎨 UI/UX
-- Fully responsive design (mobile, tablet, desktop)
-- DaisyUI + Tailwind CSS styling
-- Consistent design system
-- Toast notifications for user feedback
-- SweetAlert2 for confirmations
-- Smooth animations with Framer Motion
-- Loading states and error handling
+**Backend:**
+- Express.js
+- MongoDB
+- Firebase Admin SDK
+- [Backend Repository](https://github.com/AhmadZubayer/HabitTracker-ExpressJSBackend.git)
 
-## 🚀 Getting Started
+## Features
 
-### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
+✅ Firebase Authentication (Email/Password & Google)  
+✅ Password validation (uppercase, lowercase, 6+ characters)  
+✅ Password toggle visibility  
+✅ Forgot Password functionality  
+✅ Protected routes for habit details and profile  
+✅ User profile management with Firebase updateProfile()  
+✅ Create habits with image upload (ImageBB integration)  
+✅ Mark habits complete (once per day)  
+✅ 30-day progress calendar with completion rate  
+✅ Automatic streak calculation  
+✅ Search and filter public habits  
+✅ Update and delete your own habits  
+✅ Responsive navbar with conditional rendering  
+✅ Toast notifications for user feedback  
+✅ SweetAlert2 for confirmations  
+✅ Framer Motion animations  
+✅ Loading states throughout the app  
+✅ MongoDB backend for habit storage  
+✅ JWT authentication with Firebase tokens  
 
-### Installation
+## Use of AI
 
-1. Clone the repository
-```bash
-git clone <repository-url>
-cd habit-tracker-clientside
-```
+AI (Claude Sonnet 4.5) has been used for learning purposes. Used for authentication flow, streak calculation logic, and Framer Motion animations implementation.
 
-2. Install dependencies
-```bash
-npm install
-```
-
-3. Create `.env` file (copy from `.env.example`)
-```bash
-cp .env.example .env
-```
-
-4. Add your Firebase and ImageBB credentials to `.env`:
-```env
-VITE_apiKey=your_firebase_api_key
-VITE_authDomain=your_firebase_auth_domain
-VITE_projectId=your_firebase_project_id
-VITE_storageBucket=your_firebase_storage_bucket
-VITE_messagingSenderId=your_firebase_messaging_sender_id
-VITE_appId=your_firebase_app_id
-VITE_IMGBB_API_KEY=your_imagebb_api_key
-```
-
-### Get API Keys
-
-#### Firebase Setup
-1. Go to [Firebase Console](https://console.firebase.google.com/)
-2. Create a new project
-3. Enable Authentication (Email/Password and Google)
-4. Copy configuration from Project Settings
-5. Add credentials to `.env`
-
-#### ImageBB Setup
-1. Go to [ImageBB API](https://api.imgbb.com/)
-2. Sign up and get your API key
-3. Add `VITE_IMGBB_API_KEY` to `.env`
-
-### Run Development Server
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-### Build for Production
-
-```bash
-npm run build
-```
 
 ## 📁 Project Structure
 
 ```
 src/
 ├── authentication/      # Firebase configuration
-├── components/          # Reusable components (NavBar, Footer)
+├── components/          # Reusable components (NavBar, Footer, HabitCard)
 ├── context/            # Auth context and providers
+├── hooks/              # Custom hooks (useAuth, useAxiosSecure)
 ├── layout/             # Layout components (Root)
 ├── pages/              # Page components
 │   ├── Home.jsx
@@ -127,68 +76,43 @@ src/
 │   ├── MyHabits.jsx
 │   ├── BrowseHabits.jsx
 │   ├── HabitDetails.jsx
-│   ├── Loading.jsx
+│   ├── UpdateHabit.jsx
 │   └── NotFound.jsx
 ├── routes/             # Router configuration
-├── services/           # Business logic (habitService.js)
-├── utils/              # Utility functions (imageUpload.js)
+├── utils/              # Utility functions (imageUpload, habitUtils, axiosInstance)
 ├── main.jsx            # App entry point
 └── index.css           # Global styles
 ```
 
-## 🛠️ Tech Stack
+## 🎯 Key Features Explained
 
-- **React 19** - UI library
-- **Vite** - Build tool
-- **React Router v7** - Routing
-- **Firebase** - Authentication
-- **Tailwind CSS** - Styling
-- **DaisyUI** - UI components
-- **Framer Motion** - Animations
-- **React Hot Toast** - Notifications
-- **SweetAlert2** - Confirmation dialogs
-- **Axios** - HTTP client
-- **React Icons** - Icon library
-- **React Simple Typewriter** - Typewriter effect
-- **Lottie React** - Lottie animations
+### Streak Tracking
+- Automatically calculates consecutive completion days
+- Resets to 0 if a day is missed
+- Visual progress calendar shows last 30 days
+- Completion rate percentage displayed
 
-## 📝 Notes
+### Authentication Flow
+- Firebase handles user authentication
+- JWT tokens sent with every API request
+- Protected routes redirect to login if not authenticated
+- User profile updates sync with Firebase
 
-- All habit data is stored in **localStorage** (no backend required)
-- Habits can be marked complete **once per day only**
-- Current streak is calculated from consecutive completion days
-- Public habits are visible to all users in Browse section
-- Private routes require authentication
+### Habit Privacy
+- Public habits appear in Browse section
+- Private habits only visible to creator
+- Toggle privacy when creating/updating habits
 
-## 🎯 Features Implemented
+## Courtesy
 
-✅ Firebase Authentication (Email/Password + Google)  
-✅ Password validation rules  
-✅ Toast notifications  
-✅ Private route protection  
-✅ Home page with 5 sections  
-✅ Featured habits (6 newest public)  
-✅ Add Habit with ImageBB upload  
-✅ My Habits table view  
-✅ Mark Complete (once per day)  
-✅ Update & Delete habits  
-✅ Browse Public Habits  
-✅ Search & Filter functionality  
-✅ Habit Details page  
-✅ 30-day progress calendar  
-✅ Streak calculation & badges  
-✅ Progress bar visualization  
-✅ Fully responsive design  
-✅ Framer Motion animations  
-✅ Loading states  
-✅ 404 page  
-✅ Consistent design system  
+**Design Inspiration:** Modern habit tracking apps  
+**Icons:** React Icons  
+**Images:** Freepik, Unsplash  
+**Backend:** Express.js + MongoDB
 
 ## 📄 License
 
 This project is created for educational purposes.
 
-## 👨‍💻 Developer
 
-Built with ❤️ following modern React best practices and the reference architecture from `ref/` folder.
 

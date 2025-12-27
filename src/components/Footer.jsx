@@ -79,11 +79,11 @@ const Footer = () => {
         <div className="border-t border-gray-300 mt-8 pt-6 text-center">
           <p>© 2025 HabitTracker. All rights reserved.</p>
           <p className="mt-2">
-            This is a project of Web Development course at Programming Hero.
+            This is a project of Web Development course, built by Ahmad Zubayer.
           </p>
           <div className="flex items-center justify-center gap-6 mt-3">
             <a 
-              href="https://github.com" 
+              href="https://github.com/AhmadZubayer/HabitTracker-ReactJS-Clientside.git" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-2 hover:text-[#1085F1] transition"

@@ -48,20 +48,17 @@ const CompletedHabit = {
   markComplete: async (habitId, habit, onSuccess, onError, axiosSecure) => {
     const today = new Date().toISOString().split('T')[0];
     
-    // Check if already completed today
     if (habit.completionHistory && habit.completionHistory.includes(today)) {
       toast.error('Already completed today!');
       return;
     }
 
     try {
-      // Prepare data to send to backend
       const payload = {
         habitId,
         date: today
       };
 
-      // Use the provided axiosSecure instance to call backend API
       if (!axiosSecure) {
         toast.error('Authentication required');
         return;
@@ -72,7 +69,6 @@ const CompletedHabit = {
       if (response.data) {
         toast.success('Habit marked as complete! 🎉');
         if (onSuccess) {
-          // Pass the response data including streak info
           onSuccess(response.data);
         }
       }

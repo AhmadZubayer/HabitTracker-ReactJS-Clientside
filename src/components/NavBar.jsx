@@ -55,7 +55,6 @@ const NavBar = () => {
             )}
             <NavLink to="/browse-habits" className={({ isActive }) => isActive ? "py-2 px-4 text-green-600 font-semibold" : "py-2 px-4"}>Browse Habits</NavLink>
             
-            {/* Theme Controller in Mobile Menu */}
             <li className="py-2 px-4">
               <label className="flex cursor-pointer gap-2 items-center">
                 <svg
@@ -115,7 +114,6 @@ const NavBar = () => {
         </ul>
       </div>
       <div className="navbar-end gap-2">
-        {/* Theme Controller - Desktop Only */}
         <label className="hidden lg:flex cursor-pointer gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -152,7 +150,6 @@ const NavBar = () => {
           </svg>
         </label>
         
-        {/* Add Habit Button - Mobile Only */}
         <Link 
           to="/add-habit" 
           className="lg:hidden"

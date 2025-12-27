@@ -53,7 +53,6 @@ const HabitCard = ({ habit, variants }) => {
           </div>
         </div>
 
-        {/* See Details Button */}
         <Link
           to={`/habit/${habit._id}`}
           className="btn-secondary w-full text-center flex items-center justify-center"
