@@ -83,7 +83,7 @@ const UpdateHabit = () => {
     try {
       let imageUrl = habit.imageUrl;
 
-      if (image) {
+      if (imageFile) {
         imageUrl = await uploadImageToImageBB(imageFile);
       }
 
