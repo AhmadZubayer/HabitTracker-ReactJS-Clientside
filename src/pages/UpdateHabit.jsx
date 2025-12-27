@@ -5,6 +5,7 @@ import { uploadImageToImageBB } from '../utils/imageUpload';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const UpdateHabit = () => {
   const { user } = use(AuthContext);
@@ -14,11 +15,13 @@ const UpdateHabit = () => {
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [habit, setHabit] = useState(null);
+  const [pageLoading, setPageLoading] = useState(true);
 
   const categories = ['Morning', 'Work', 'Fitness', 'Evening', 'Study'];
 
   useEffect(() => {
     if (id) {
+      setPageLoading(true);
       console.log('Fetching habit with ID:', id);
       axios.get(`http://localhost:3000/habits/${id}`)
         .then(res => {
@@ -30,6 +33,9 @@ const UpdateHabit = () => {
           console.error('Error details:', err.response?.data || err.message);
           toast.error(`Failed to load habit: ${err.response?.data?.message || err.message}`);
           navigate('/my-habits');
+        })
+        .finally(() => {
+          setPageLoading(false);
         });
     }
   }, [id]);
@@ -103,10 +109,18 @@ const UpdateHabit = () => {
     }
   };
 
+  if (pageLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
+  }
+
   if (!habit) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <span className="loading loading-spinner loading-lg text-primary"></span>
+        <p className="text-xl text-gray-600">Habit not found</p>
       </div>
     );
   }

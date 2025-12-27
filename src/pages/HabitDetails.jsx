@@ -8,6 +8,7 @@ import { FaTrophy, FaCalendarCheck, FaClock } from 'react-icons/fa';
 import { MdOutlineTaskAlt } from 'react-icons/md';
 import CompletedHabit from '../components/CompletedHabit';
 import CompletionModal from '../components/CompletionModal';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const HabitDetails = () => {
   const { id } = useParams();
@@ -18,8 +19,11 @@ const HabitDetails = () => {
   const [progressData, setProgressData] = useState([]);
   const [showCompletionModal, setShowCompletionModal] = useState(false);
   const [completionData, setCompletionData] = useState({ streak: 0, habitTitle: '' });
+  const [loading, setLoading] = useState(true);
+  const [imageLoading, setImageLoading] = useState(true);
   
   const loadHabit = async () => {
+    setLoading(true);
     try {
       const response = await axios.get(`http://localhost:3000/habits/${id}`);
       const habitState = response.data;
@@ -46,6 +50,8 @@ const HabitDetails = () => {
     } catch (error) {
       console.error('Error loading habit:', error);
       toast.error('Habit not found');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -80,10 +86,18 @@ const HabitDetails = () => {
     ? ((progressData.filter(d => d.completed).length / 30) * 100).toFixed(0) 
     : 0;
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
+  }
+
   if (!habit) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <span className="loading loading-spinner loading-lg"></span>
+        <p className="text-xl text-gray-600">Habit not found</p>
       </div>
     );
   }
@@ -111,12 +125,18 @@ const HabitDetails = () => {
               <div className="flex flex-col sm:flex-row items-start" style={{ gap: '16px' }}>
                 {/* Habit Image */}
                 <div className="w-full sm:w-48 flex-shrink-0">
-                  <div className="rounded-3xl overflow-hidden shadow-lg">
+                  <div className="rounded-3xl overflow-hidden shadow-lg relative" style={{ height: '200px' }}>
+                    {imageLoading && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-base-200">
+                        <span className="loading loading-bars loading-md"></span>
+                      </div>
+                    )}
                     <img
                       src={habit.imageUrl || '/default-habit-img/51359.jpg'}
                       alt={habit.title}
                       className="w-full sm:h-full object-cover"
-                      style={{ height: '200px' }}
+                      style={{ height: '200px', display: imageLoading ? 'none' : 'block' }}
+                      onLoad={() => setImageLoading(false)}
                     />
                   </div>
                 </div>

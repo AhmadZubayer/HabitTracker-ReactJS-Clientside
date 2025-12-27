@@ -9,6 +9,7 @@ import { MdOutlineTaskAlt } from 'react-icons/md';
 import axios from 'axios';
 import CompletedHabit, { isCompletedToday } from '../components/CompletedHabit';
 import CompletionModal from '../components/CompletionModal';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const MyHabits = () => {
   const { user } = use(AuthContext);
@@ -16,9 +17,11 @@ const MyHabits = () => {
   const [habits, setHabits] = useState([]);
   const [showCompletionModal, setShowCompletionModal] = useState(false);
   const [completionData, setCompletionData] = useState({ streak: 0, habitTitle: '' });
+  const [loading, setLoading] = useState(true);
 
   const loadHabits = () => {
     if (user?.email) {
+      setLoading(true);
       axios.get(`http://localhost:3000/habits/user/${user.email}`)
         .then(res => {
           setHabits(res.data);
@@ -26,6 +29,9 @@ const MyHabits = () => {
         .catch(err => {
           console.error('Error loading habits:', err);
           toast.error('Failed to load habits');
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
   };
@@ -98,7 +104,11 @@ const MyHabits = () => {
       >
         <h2 className="text-4xl font-bold text-center mb-8">My Habits</h2>
 
-        {habits.length === 0 ? (
+        {loading ? (
+          <div className="min-h-[400px] flex items-center justify-center">
+            <LoadingSpinner size="lg" />
+          </div>
+        ) : habits.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-xl text-gray-600 mb-4">You haven't created any habits yet.</p>
             <a href="/add-habit" className="btn btn-primary">

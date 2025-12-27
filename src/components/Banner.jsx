@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
@@ -8,6 +8,8 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 const Banner = () => {
+  const [imageLoading, setImageLoading] = useState({});
+
   const bannerSlides = [
     {
       title: 'Build Better Habits',
@@ -31,6 +33,18 @@ const Banner = () => {
       link: '/browse-habits'
     }
   ];
+
+  const handleImageLoad = (index) => {
+    setImageLoading(prev => ({ ...prev, [index]: false }));
+  };
+
+  React.useEffect(() => {
+    const loading = {};
+    bannerSlides.forEach((_, index) => {
+      loading[index] = true;
+    });
+    setImageLoading(loading);
+  }, []);
 
   return (
     <section className="relative max-w-7xl mx-auto px-4 py-8">
@@ -57,10 +71,17 @@ const Banner = () => {
         {bannerSlides.map((slide, index) => (
           <SwiperSlide key={index}>
             <div className="relative h-full w-full">
+              {imageLoading[index] && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-gray-800 to-gray-700">
+                  <span className="loading loading-bars loading-lg text-white"></span>
+                </div>
+              )}
               <img
                 src={slide.image}
                 alt={slide.title}
                 className="w-full h-full object-cover"
+                onLoad={() => handleImageLoad(index)}
+                style={{ display: imageLoading[index] ? 'none' : 'block' }}
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 flex items-center justify-center">
                 <div className="text-white px-12 text-center max-w-4xl">

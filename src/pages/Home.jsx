@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router';
 import Banner from '../components/Banner';
 import HabitCard from '../components/HabitCard';
+import LoadingSpinner from '../components/LoadingSpinner';
 import axios from 'axios';
 import { 
   FaBullseye, 
@@ -20,6 +21,7 @@ import { MdOutlineTaskAlt } from 'react-icons/md';
 
 const Home = () => {
   const [featuredHabits, setFeaturedHabits] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Fetch 4 newest public habits
@@ -29,6 +31,9 @@ const Home = () => {
       })
       .catch(err => {
         console.error('Error loading featured habits:', err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -69,26 +74,32 @@ const Home = () => {
             <p className="text-lg text-gray-600">Discover popular habits from our community</p>
           </motion.div>
 
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-          >
-            {featuredHabits.length > 0 ? (
-              featuredHabits.map((habit) => (
-                <HabitCard key={habit._id} habit={habit} variants={itemVariants} />
-              ))
-            ) : (
-              <div className="col-span-full text-center py-12">
-                <p className="text-xl text-gray-600">No habits yet. Be the first to create one!</p>
-                <Link to="/add-habit" className="btn btn-primary mt-4">
-                  <FaPlus /> Create Your First Habit
-                </Link>
-              </div>
-            )}
-          </motion.div>
+          {loading ? (
+            <div className="min-h-[400px] flex items-center justify-center">
+              <LoadingSpinner size="lg" />
+            </div>
+          ) : (
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            >
+              {featuredHabits.length > 0 ? (
+                featuredHabits.map((habit) => (
+                  <HabitCard key={habit._id} habit={habit} variants={itemVariants} />
+                ))
+              ) : (
+                <div className="col-span-full text-center py-12">
+                  <p className="text-xl text-gray-600">No habits yet. Be the first to create one!</p>
+                  <Link to="/add-habit" className="btn btn-primary mt-4">
+                    <FaPlus /> Create Your First Habit
+                  </Link>
+                </div>
+              )}
+            </motion.div>
+          )}
         </div>
       </section>
 

@@ -4,15 +4,18 @@ import { motion } from 'framer-motion';
 import { FaSearch } from 'react-icons/fa';
 import axios from 'axios';
 import HabitCard from '../components/HabitCard';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const BrowseHabits = () => {
   const [habits, setHabits] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [loading, setLoading] = useState(true);
   
   const categories = ['All', 'Morning', 'Work', 'Fitness', 'Evening', 'Study'];
 
   const loadHabits = React.useCallback(() => {
+    setLoading(true);
     let url = 'http://localhost:3000/habits/public';
     const params = new URLSearchParams();
     
@@ -29,6 +32,9 @@ const BrowseHabits = () => {
       })
       .catch(err => {
         console.error('Error loading habits:', err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [searchTerm, selectedCategory]);
 
@@ -117,7 +123,11 @@ const BrowseHabits = () => {
           </div>
 
           {/* Habits Cards Grid */}
-          {habits.length === 0 ? (
+          {loading ? (
+            <div className="min-h-[400px] flex items-center justify-center">
+              <LoadingSpinner size="lg" />
+            </div>
+          ) : habits.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-xl text-gray-600">No habits found matching your criteria.</p>
             </div>

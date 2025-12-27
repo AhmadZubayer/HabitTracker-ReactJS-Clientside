@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Suspense, useState } from 'react';
 import { Link } from 'react-router';
 import { motion } from 'framer-motion';
 import { FaTrophy, FaEye, FaChartLine } from 'react-icons/fa';
 import { MdOutlineTaskAlt } from 'react-icons/md';
 
 const HabitCard = ({ habit, variants }) => {
+  const [imageLoading, setImageLoading] = useState(true);
+
   return (
     <motion.div
       variants={variants}
@@ -13,10 +15,17 @@ const HabitCard = ({ habit, variants }) => {
     >
       {/* Habit Image/Banner */}
       <figure className="h-44 bg-gradient-to-br from-blue-500 to-blue-600 relative overflow-hidden">
+        {imageLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600">
+            <span className="loading loading-bars loading-md"></span>
+          </div>
+        )}
         <img
           src={habit.imageUrl || '/default-habit-img/51359.jpg'}
           alt={habit.title}
           className="w-full h-full object-cover transition-all duration-300 group-hover:brightness-50"
+          onLoad={() => setImageLoading(false)}
+          style={{ display: imageLoading ? 'none' : 'block' }}
         />
         {/* Hover Description Overlay */}
         <div className="absolute inset-0 flex items-center justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
