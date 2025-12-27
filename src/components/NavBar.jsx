@@ -128,7 +128,15 @@ const NavBar = () => {
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img src={user?.photoURL || 'https://via.placeholder.com/150'} alt="User Avatar" />
+                <img 
+                  src={user?.photoURL || 'https://via.placeholder.com/150'} 
+                  alt="User Avatar"
+                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'https://via.placeholder.com/150';
+                  }}
+                />
               </div>
             </div>
             <ul tabIndex={0} className="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-56 p-4 shadow card-bg">

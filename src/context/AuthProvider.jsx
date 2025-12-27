@@ -37,10 +37,10 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   }
 
-  const updateUserProfile = (profileData) => {
+  const updateUserProfile = () => {
     if (auth.currentUser) {
-      return updateProfile(auth.currentUser, profileData).then(() => {
-        setUser({...auth.currentUser});
+      return auth.currentUser.reload().then(() => {
+        setUser({...auth.currentUser}); // Force new object reference to trigger re-render
       });
     }
     return Promise.resolve();
@@ -67,9 +67,9 @@ const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext value={authInfo}>
+    <AuthContext.Provider value={authInfo}>
       {children}
-    </AuthContext>
+    </AuthContext.Provider>
   );
 };
 

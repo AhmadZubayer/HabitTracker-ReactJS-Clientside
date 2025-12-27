@@ -1,5 +1,4 @@
 import React from 'react';
-import axiosInstance from '../utils/axiosInstance';
 import { toast } from 'react-hot-toast';
 
 /**
@@ -44,8 +43,9 @@ const CompletedHabit = {
    * @param {object} habit - The complete habit object
    * @param {function} onSuccess - Callback function on success (receives updated data)
    * @param {function} onError - Optional callback function on error
+   * @param {object} axiosSecure - Authenticated axios instance
    */
-  markComplete: async (habitId, habit, onSuccess, onError) => {
+  markComplete: async (habitId, habit, onSuccess, onError, axiosSecure) => {
     const today = new Date().toISOString().split('T')[0];
     
     // Check if already completed today
@@ -61,7 +61,8 @@ const CompletedHabit = {
         date: today
       };
 
-      // Call backend API to mark as complete
+      // Use the provided axiosSecure instance to call backend API
+      const axiosInstance = axiosSecure || (await import('../utils/axiosInstance')).default;
       const response = await axiosInstance.post(`/habits/${habitId}/complete`, payload);
       
       if (response.data) {

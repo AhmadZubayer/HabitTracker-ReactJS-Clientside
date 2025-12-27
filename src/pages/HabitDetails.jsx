@@ -73,7 +73,7 @@ const HabitDetails = () => {
       
       // Reload habit after successful completion
       loadHabit();
-    });
+    }, null, axiosSecure);
   };
 
   const getStreakBadgeColor = (streak) => {
@@ -271,7 +271,7 @@ const HabitDetails = () => {
               </div>
 
               {/* Calendar Grid */}
-              <div className="grid grid-cols-7 sm:grid-cols-10 lg:grid-cols-15 gap-1.5 sm:gap-2">
+              <div className="grid grid-cols-7 sm:grid-cols-10 lg:grid-cols-15 gap-2 sm:gap-3">
                 {progressData.map((day, index) => (
                   <div
                     key={index}
@@ -279,7 +279,7 @@ const HabitDetails = () => {
                     data-tip={`${day.date}: ${day.completed ? 'Completed' : 'Missed'}`}
                   >
                     <div
-                      className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-xs font-bold transition-all cursor-pointer ${
+                      className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center text-sm sm:text-base font-bold transition-all cursor-pointer ${
                         day.completed
                           ? 'bg-success text-white'
                           : 'bg-base-300 text-gray-500'

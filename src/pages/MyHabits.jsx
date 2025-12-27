@@ -23,7 +23,7 @@ const MyHabits = () => {
   const loadHabits = () => {
     if (user?.email) {
       setLoading(true);
-      axiosSecure.get(`/habits/user/${user.email}`)
+      axiosSecure.get(`/habits?email=${user.email}`)
         .then(res => {
           setHabits(res.data);
         })
@@ -79,7 +79,7 @@ const MyHabits = () => {
       
       // Reload habits after successful completion
       loadHabits();
-    });
+    }, null, axiosSecure);
   };
 
   const handleEdit = (habitId) => {

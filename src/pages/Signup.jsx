@@ -56,17 +56,19 @@ const Signup = () => {
         updateProfile(result.user, profile)
           .then(() => {
             result.user.reload().then(() => {
-              updateUserProfile();
+              updateUserProfile(); // Force context update
               toast.success('Account created successfully!');
               form.reset();
               navigate(location?.state ? location.state : '/');
             });
           })
-          .catch(() => {
+          .catch((err) => {
+            console.error(err);
             toast.error('Error updating profile');
           });
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error('ERROR OCCURRED! ', err.message);
         toast.error('Sign up failed');
       })
       .finally(() => setLoading(false));
