@@ -62,8 +62,12 @@ const CompletedHabit = {
       };
 
       // Use the provided axiosSecure instance to call backend API
-      const axiosInstance = axiosSecure || (await import('../utils/axiosInstance')).default;
-      const response = await axiosInstance.post(`/habits/${habitId}/complete`, payload);
+      if (!axiosSecure) {
+        toast.error('Authentication required');
+        return;
+      }
+      
+      const response = await axiosSecure.post(`/habits/${habitId}/complete`, payload);
       
       if (response.data) {
         toast.success('Habit marked as complete! 🎉');
